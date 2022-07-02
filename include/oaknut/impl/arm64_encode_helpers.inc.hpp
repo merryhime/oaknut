@@ -39,9 +39,11 @@ template<std::uint32_t splat>
 std::uint32_t encode(MovImm16 v)
 {
     static_assert(std::popcount(splat) == 17 || std::popcount(splat) == 18);
-    constexpr std::uint32_t mask = (1 << std::popcount(splat)) - 1;
-    if ((v.m_encoded & mask) != v.m_encoded)
-        throw "invalid MovImm16";
+    if constexpr (std::popcount(splat) == 17) {
+        constexpr std::uint32_t mask = (1 << std::popcount(splat)) - 1;
+        if ((v.m_encoded & mask) != v.m_encoded)
+            throw "invalid MovImm16";
+    }
     return detail::pdep(v.m_encoded, splat);
 }
 
