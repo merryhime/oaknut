@@ -231,7 +231,7 @@ private:
 template<std::size_t max_value>
 struct LslShift {
     constexpr /* implicit */ LslShift(std::size_t amount)
-        : m_amount(amount)
+        : m_encoded((((-amount) & (max_value - 1)) << 6) | (max_value - amount - 1))
     {
         if (amount >= max_value)
             throw "LslShift out of range";
@@ -239,7 +239,7 @@ struct LslShift {
 
 private:
     friend class CodeGenerator;
-    std::size_t m_amount;
+    std::uint32_t m_encoded;
 };
 
 }  // namespace oaknut
