@@ -24,8 +24,8 @@ void ADD(WRegWsp wd, WRegWsp wn, WReg wm, AddSubExt ext = AddSubExt::LSL, Imm<3>
 }
 void ADD(XRegSp xd, XRegSp xn, RReg rm, AddSubExt ext = AddSubExt::LSL, Imm<3> shift_amount = 0)
 {
-    addsubext_verify_reg_size(ext, rm);
     addsubext_lsl_correction(ext, xd);
+    addsubext_verify_reg_size(ext, rm);
     emit<"10001011001mmmmmxxxiiinnnnnddddd", "d", "n", "m", "x", "i">(xd, xn, rm, ext, shift_amount);
 }
 void ADD(WRegWsp wd, WRegWsp wn, AddSubImm imm)
@@ -51,8 +51,8 @@ void ADDS(WReg wd, WRegWsp wn, WReg wm, AddSubExt ext = AddSubExt::LSL, Imm<3> s
 }
 void ADDS(XReg xd, XRegSp xn, RReg rm, AddSubExt ext = AddSubExt::LSL, Imm<3> shift_amount = 0)
 {
-    addsubext_verify_reg_size(ext, rm);
     addsubext_lsl_correction(ext, xd);
+    addsubext_verify_reg_size(ext, rm);
     emit<"10101011001mmmmmxxxiiinnnnnddddd", "d", "n", "m", "x", "i">(xd, xn, rm, ext, shift_amount);
 }
 void ADDS(WReg wd, WRegWsp wn, AddSubImm imm)
@@ -310,8 +310,8 @@ void CMN(WRegWsp wn, WReg wm, AddSubExt ext = AddSubExt::LSL, Imm<3> shift_amoun
 }
 void CMN(XRegSp xn, RReg rm, AddSubExt ext = AddSubExt::LSL, Imm<3> shift_amount = 0)
 {
-    addsubext_verify_reg_size(ext, rm);
     addsubext_lsl_correction(ext, xn);
+    addsubext_verify_reg_size(ext, rm);
     emit<"10101011001mmmmmxxxiiinnnnn11111", "n", "m", "x", "i">(xn, rm, ext, shift_amount);
 }
 void CMN(WRegWsp wn, AddSubImm imm)
@@ -337,8 +337,8 @@ void CMP(WRegWsp wn, WReg wm, AddSubExt ext = AddSubExt::LSL, Imm<3> shift_amoun
 }
 void CMP(XRegSp xn, RReg rm, AddSubExt ext = AddSubExt::LSL, Imm<3> shift_amount = 0)
 {
-    addsubext_verify_reg_size(ext, rm);
     addsubext_lsl_correction(ext, xn);
+    addsubext_verify_reg_size(ext, rm);
     emit<"11101011001mmmmmxxxiiinnnnn11111", "n", "m", "x", "i">(xn, rm, ext, shift_amount);
 }
 void CMP(WRegWsp wn, AddSubImm imm)
@@ -1474,8 +1474,8 @@ void SUB(WRegWsp wd, WRegWsp wn, WReg wm, AddSubExt ext = AddSubExt::LSL, Imm<3>
 }
 void SUB(XRegSp xd, XRegSp xn, RReg rm, AddSubExt ext = AddSubExt::LSL, Imm<3> shift_amount = 0)
 {
-    addsubext_verify_reg_size(ext, rm);
     addsubext_lsl_correction(ext, xd);
+    addsubext_verify_reg_size(ext, rm);
     emit<"11001011001mmmmmxxxiiinnnnnddddd", "d", "n", "m", "x", "i">(xd, xn, rm, ext, shift_amount);
 }
 void SUB(WRegWsp wd, WRegWsp wn, AddSubImm imm)
@@ -1501,8 +1501,8 @@ void SUBS(WReg wd, WRegWsp wn, WReg wm, AddSubExt ext = AddSubExt::LSL, Imm<3> s
 }
 void SUBS(XReg xd, XRegSp xn, RReg rm, AddSubExt ext = AddSubExt::LSL, Imm<3> shift_amount = 0)
 {
-    addsubext_verify_reg_size(ext, rm);
     addsubext_lsl_correction(ext, xd);
+    addsubext_verify_reg_size(ext, rm);
     emit<"11101011001mmmmmxxxiiinnnnnddddd", "d", "n", "m", "x", "i">(xd, xn, rm, ext, shift_amount);
 }
 void SUBS(WReg wd, WRegWsp wn, AddSubImm imm)
