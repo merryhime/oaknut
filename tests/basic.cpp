@@ -1,6 +1,10 @@
+// SPDX-FileCopyrightText: 2022 merryhime
+// SPDX-License-Identifier: MIT
+
 #include <cstdint>
 #include <cstdio>
 
+#include <catch2/catch_test_macros.hpp>
 #include <libkern/OSCacheControl.h>
 #include <pthread.h>
 #include <sys/mman.h>
@@ -8,7 +12,7 @@
 
 #include "oaknut/oaknut.hpp"
 
-int main()
+TEST_CASE("Basic Test")
 {
     const size_t page_size = getpagesize();
     std::printf("page size: %zu\n", page_size);
@@ -27,7 +31,6 @@ int main()
     pthread_jit_write_protect_np(true);
     sys_icache_invalidate(mem, page_size);
 
-    std::printf("%i\n", ((int (*)())mem)());
-
-    return 0;
+    int result = ((int (*)())mem)();
+    REQUIRE(result == 42);
 }
