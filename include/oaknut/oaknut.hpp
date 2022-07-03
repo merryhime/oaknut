@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 merryhime
+// SPDX-FileCopyrightText: Copyright (c) 2022 merryhime <https://mary.rs>
 // SPDX-License-Identifier: MIT
 
 #include <bit>
