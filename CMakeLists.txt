@@ -41,6 +41,7 @@ if (MASTER_PROJECT)
 
     add_executable(oaknut-tests
         tests/basic.cpp
+        tests/general.cpp
     )
     target_include_directories(oaknut-tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests)
     target_link_libraries(oaknut-tests PRIVATE Catch2::Catch2WithMain merry::oaknut)
