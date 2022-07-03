@@ -1,12 +1,25 @@
 // SPDX-FileCopyrightText: 2022 merryhime
 // SPDX-License-Identifier: MIT
 
-#define OAKNUT_STD_ENCODE(TYPE, ACCESS, SIZE)                           \
-    template<std::uint32_t splat>                                       \
-    std::uint32_t encode(TYPE v)                                        \
-    {                                                                   \
-        static_assert(std::popcount(splat) == SIZE);                    \
-        return detail::pdep(static_cast<std::uint32_t>(ACCESS), splat); \
+template<std::uint32_t mask_>
+static constexpr std::uint32_t pdep(std::uint32_t val)
+{
+    std::uint32_t mask = mask_;
+    std::uint32_t res = 0;
+    for (std::uint32_t bb = 1; mask; bb += bb) {
+        if (val & bb)
+            res |= mask & -mask;
+        mask &= mask - 1;
+    }
+    return res;
+}
+
+#define OAKNUT_STD_ENCODE(TYPE, ACCESS, SIZE)                   \
+    template<std::uint32_t splat>                               \
+    std::uint32_t encode(TYPE v)                                \
+    {                                                           \
+        static_assert(std::popcount(splat) == SIZE);            \
+        return pdep<splat>(static_cast<std::uint32_t>(ACCESS)); \
     }
 
 OAKNUT_STD_ENCODE(RReg, v.index() & 31, 5)
@@ -44,54 +57,41 @@ std::uint32_t encode(MovImm16 v)
         if ((v.m_encoded & mask) != v.m_encoded)
             throw "invalid MovImm16";
     }
-    return detail::pdep(v.m_encoded, splat);
+    return pdep<splat>(v.m_encoded);
 }
 
 template<std::uint32_t splat, std::size_t imm_size>
 std::uint32_t encode(Imm<imm_size> v)
 {
     static_assert(std::popcount(splat) >= imm_size);
-    return detail::pdep(v.value(), splat);
+    return pdep<splat>(v.value());
 }
 
 template<std::uint32_t splat, int A, int B>
 std::uint32_t encode(ImmChoice<A, B> v)
 {
     static_assert(std::popcount(splat) == 1);
-    return detail::pdep(v.m_encoded, splat);
-}
-
-template<std::uint32_t splat, std::size_t size, std::size_t align>
-std::uint32_t encode(AddrOffset<size, align> v)
-{
-    static_assert(std::popcount(splat) == size - align);
-    return detail::pdep(v.m_encoded, splat);
-}
-
-template<std::uint32_t splat, std::size_t size>
-std::uint32_t encode(PageOffset<size> v)
-{
-    throw "to be implemented";
+    return pdep<splat>(v.m_encoded);
 }
 
 template<std::uint32_t splat, std::size_t size, std::size_t align>
 std::uint32_t encode(SOffset<size, align> v)
 {
     static_assert(std::popcount(splat) == size - align);
-    return detail::pdep(v.m_encoded, splat);
+    return pdep<splat>(v.m_encoded);
 }
 
 template<std::uint32_t splat, std::size_t size, std::size_t align>
 std::uint32_t encode(POffset<size, align> v)
 {
     static_assert(std::popcount(splat) == size - align);
-    return detail::pdep(v.m_encoded, splat);
+    return pdep<splat>(v.m_encoded);
 }
 
 template<std::uint32_t splat>
 std::uint32_t encode(std::uint32_t v)
 {
-    return detail::pdep(v, splat);
+    return pdep<splat>(v);
 }
 
 #undef OAKNUT_STD_ENCODE

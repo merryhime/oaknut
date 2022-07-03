@@ -50,7 +50,8 @@ struct RReg : public Reg {
     XReg toX() const;
     WReg toW() const;
 
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
 };
 
 struct ZrReg : public RReg {
@@ -70,7 +71,8 @@ struct XReg : public RReg {
     constexpr /* implicit */ XReg(ZrReg)
         : RReg(64, 31) {}
 
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
 };
 
 struct WReg : public RReg {
@@ -80,7 +82,8 @@ struct WReg : public RReg {
     constexpr /* implicit */ WReg(WzrReg)
         : RReg(32, 31) {}
 
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
 };
 
 XReg RReg::toX() const
@@ -118,7 +121,8 @@ struct XRegSp : public RReg {
             throw "unexpected ZR passed into an XRegSp";
     }
 
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
 };
 
 struct WRegWsp : public RReg {
@@ -132,7 +136,8 @@ struct WRegWsp : public RReg {
             throw "unexpected WZR passed into an WRegWsp";
     }
 
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
 };
 
 }  // namespace oaknut

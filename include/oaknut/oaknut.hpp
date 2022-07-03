@@ -4,7 +4,11 @@
 #include <bit>
 #include <cstddef>
 #include <cstdint>
+#include <optional>
+#include <tuple>
 #include <type_traits>
+#include <variant>
+#include <vector>
 
 #include "oaknut/impl/enum.hpp"
 #include "oaknut/impl/imm.hpp"
@@ -31,25 +35,133 @@ constexpr std::uint32_t get_bits()
     return result;
 }
 
-constexpr std::uint32_t pdep(std::uint32_t val, std::uint32_t mask)
-{
-    std::uint32_t res = 0;
-    for (std::uint32_t bb = 1; mask; bb += bb) {
-        if (val & bb)
-            res |= mask & -mask;
-        mask &= mask - 1;
-    }
-    return res;
-}
+template<class... Ts>
+struct overloaded : Ts... {
+    using Ts::operator()...;
+};
 
 }  // namespace detail
 
-class CodeGenerator {
+struct Label {
 public:
-    explicit CodeGenerator(std::uint32_t* ptr)
-        : m_ptr(ptr)
+    Label() = default;
+
+private:
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+
+    explicit Label(std::uintptr_t addr)
+        : m_addr(addr)
     {}
 
+    using EmitFunctionType = std::uint32_t (*)(std::uintptr_t wb_addr, std::uintptr_t resolved_addr);
+
+    struct Writeback {
+        std::uintptr_t m_wb_addr;
+        std::uint32_t m_mask;
+        EmitFunctionType m_fn;
+    };
+
+    std::optional<std::uintptr_t> m_addr;
+    std::vector<Writeback> m_wbs;
+};
+
+template<typename Policy>
+class BasicCodeGenerator : public Policy {
+public:
+    BasicCodeGenerator(typename Policy::constructor_argument_type arg)
+        : Policy(arg)
+    {}
+
+    Label l()
+    {
+        return Label{Policy::current_address()};
+    }
+
+    void l(Label& label)
+    {
+        if (label.m_addr)
+            throw "label already resolved";
+
+        const auto target_addr = Policy::current_address();
+        label.m_addr = target_addr;
+        for (auto& wb : label.m_wbs) {
+            const std::uint32_t value = wb.m_fn(wb.m_wb_addr, target_addr);
+            Policy::set_at_address(wb.m_wb_addr, value, wb.m_mask);
+        }
+        label.m_wbs.clear();
+    }
+
+#include "oaknut/impl/arm64_mnemonics.inc.hpp"
+
+private:
+#include "oaknut/impl/arm64_encode_helpers.inc.hpp"
+
+    template<StringLiteral bs, StringLiteral... bargs, typename... Ts>
+    void emit(Ts... args)
+    {
+        std::uint32_t encoding = detail::get_bits<bs, "1">();
+        encoding |= (0 | ... | encode<detail::get_bits<bs, bargs>()>(std::forward<Ts>(args)));
+        Policy::append(encoding);
+    }
+
+    template<std::uint32_t splat, std::size_t size, std::size_t align>
+    std::uint32_t encode(AddrOffset<size, align> v)
+    {
+        static_assert(std::popcount(splat) == size - align);
+
+        const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
+            const std::ptrdiff_t diff = target - current_addr;
+            return pdep<splat>(AddrOffset<size, align>::encode(diff));
+        };
+
+        return std::visit(detail::overloaded{
+                              [&](std::uint32_t encoding) {
+                                  return pdep<splat>(encoding);
+                              },
+                              [&](Label* label) {
+                                  if (label->m_addr) {
+                                      return encode_fn(Policy::current_address(), *label->m_addr);
+                                  }
+
+                                  label->m_wbs.emplace_back({Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
+                                  return 0;
+                              },
+                              [&](void* p) {
+                                  return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
+                              },
+                          },
+                          v.m_payload);
+    }
+
+    template<std::uint32_t splat, std::size_t size>
+    std::uint32_t encode(PageOffset<size> v)
+    {
+        static_assert(std::popcount(splat) == size);
+
+        const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
+            return pdep<splat>(PageOffset<size>::encode(current_addr, target));
+        };
+
+        return std::visit(detail::overloaded{
+                              [&](Label* label) {
+                                  if (label->m_addr) {
+                                      return encode_fn(Policy::current_address(), *label->m_addr);
+                                  }
+
+                                  label->m_wbs.emplace_back({Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
+                                  return 0;
+                              },
+                              [&](void* p) {
+                                  return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
+                              },
+                          },
+                          v.m_payload);
+    }
+};
+
+struct PointerCodeGeneratorPolicy {
+public:
     template<typename T>
     T ptr()
     {
@@ -57,28 +169,39 @@ public:
         return reinterpret_cast<T>(m_ptr);
     }
 
-    void set_ptr(std::uint32_t* ptr)
+    void set_ptr(std::uint32_t* ptr_)
     {
-        m_ptr = ptr;
+        m_ptr = ptr_;
     }
 
-#include "oaknut/impl/arm64_mnemonics.inc.hpp"
+protected:
+    using constructor_argument_type = std::uint32_t*;
+
+    PointerCodeGeneratorPolicy(std::uint32_t* ptr_)
+        : m_ptr(ptr_)
+    {}
+
+    void append(std::uint32_t instruction)
+    {
+        *m_ptr++ = instruction;
+    }
+
+    std::uintptr_t current_address()
+    {
+        return reinterpret_cast<std::uintptr_t>(m_ptr);
+    }
+
+    void set_at_address(std::uintptr_t addr, std::uint32_t value, std::uint32_t mask)
+    {
+        std::uint32_t* p = reinterpret_cast<std::uint32_t*>(addr);
+        *p = (*p & mask) | value;
+    }
 
 private:
-    template<StringLiteral bs, StringLiteral... bargs, typename... Ts>
-    void emit(Ts... args)
-    {
-        std::uint32_t encoding = detail::get_bits<bs, "1">();
-        encoding |= (0 | ... | encode<detail::get_bits<bs, bargs>()>(std::forward<Ts>(args)));
-
-        *m_ptr = encoding;
-        m_ptr++;
-    }
-
-#include "oaknut/impl/arm64_encode_helpers.inc.hpp"
-
     std::uint32_t* m_ptr;
 };
+
+using CodeGenerator = BasicCodeGenerator<PointerCodeGeneratorPolicy>;
 
 namespace util {
 

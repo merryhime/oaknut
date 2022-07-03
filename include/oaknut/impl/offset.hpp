@@ -5,8 +5,11 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <variant>
 
 namespace oaknut {
+
+struct Label;
 
 namespace detail {
 
@@ -33,6 +36,18 @@ constexpr std::uint64_t sign_extend(std::uint64_t value)
 template<std::size_t bitsize, std::size_t alignment>
 struct AddrOffset {
     AddrOffset(std::ptrdiff_t diff)
+        : m_payload(encode(diff))
+    {}
+
+    AddrOffset(Label& label)
+        : m_payload(&label)
+    {}
+
+    AddrOffset(void* ptr)
+        : m_payload(ptr)
+    {}
+
+    static std::uint32_t encode(std::ptrdiff_t diff)
     {
         const std::uint64_t diff_u64 = static_cast<std::uint64_t>(diff);
         if (detail::sign_extend<bitsize>(diff_u64) != diff_u64)
@@ -40,23 +55,37 @@ struct AddrOffset {
         if (diff_u64 != (diff_u64 & detail::inverse_mask_from_size(alignment)))
             throw "misalignment";
 
-        m_encoded = static_cast<std::uint32_t>((diff_u64 & detail::mask_from_size(bitsize)) >> alignment);
+        return static_cast<std::uint32_t>((diff_u64 & detail::mask_from_size(bitsize)) >> alignment);
     }
 
 private:
-    friend class CodeGenerator;
-    std::uint32_t m_encoded;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+    std::variant<std::uint32_t, Label*, void*> m_payload;
 };
 
 template<std::size_t bitsize>
 struct PageOffset {
     PageOffset(void* ptr)
-        : m_ptr(ptr)
+        : m_payload(ptr)
     {}
 
+    PageOffset(Label& label)
+        : m_payload(&label)
+    {}
+
+    static std::uint32_t encode(std::uintptr_t current_addr, std::uintptr_t target)
+    {
+        const std::int64_t page_diff = (static_cast<std::int64_t>(target) >> 12) - (static_cast<std::int64_t>(current_addr) >> 12);
+        if (detail::sign_extend<bitsize>(page_diff) != page_diff)
+            throw "out of range";
+        return static_cast<std::uint32_t>(page_diff & detail::mask_from_size(bitsize));
+    }
+
 private:
-    friend class CodeGenerator;
-    void* m_ptr;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+    std::variant<Label*, void*> m_payload;
 };
 
 template<std::size_t bitsize, std::size_t alignment>
@@ -73,7 +102,8 @@ struct SOffset {
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
 };
 
@@ -91,7 +121,8 @@ struct POffset {
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
 };
 

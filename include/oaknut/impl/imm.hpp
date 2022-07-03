@@ -36,7 +36,8 @@ public:
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_value;
 };
 
@@ -71,7 +72,8 @@ public:
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
 };
 
@@ -110,7 +112,8 @@ public:
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
 };
 
@@ -119,15 +122,6 @@ namespace detail {
 constexpr std::uint64_t mask_from_esize(std::size_t esize)
 {
     return (~std::uint64_t{0}) >> (64 - esize);
-}
-
-constexpr std::optional<std::uint32_t> encode_bit_imm(std::uint32_t value)
-{
-    const std::uint64_t value_u64 = (static_cast<std::uint64_t>(value) << 32) | static_cast<std::uint64_t>(value);
-    const auto result = encode_bit_imm(value_u64);
-    if (result && (*result & 0x3FF) != *result)
-        return std::nullopt;
-    return result;
 }
 
 constexpr std::uint64_t inverse_mask_from_trailing_ones(std::uint64_t value)
@@ -170,6 +164,15 @@ constexpr std::optional<std::uint32_t> encode_bit_imm(std::uint64_t value)
     return static_cast<std::uint32_t>(((((-esize) << 7) | (S << 6) | R) ^ 0x1000) & 0x1fff);
 }
 
+constexpr std::optional<std::uint32_t> encode_bit_imm(std::uint32_t value)
+{
+    const std::uint64_t value_u64 = (static_cast<std::uint64_t>(value) << 32) | static_cast<std::uint64_t>(value);
+    const auto result = encode_bit_imm(value_u64);
+    if (result && (*result & 0x3FF) != *result)
+        return std::nullopt;
+    return result;
+}
+
 }  // namespace detail
 
 struct BitImm32 {
@@ -187,7 +190,8 @@ public:
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
 };
 
@@ -206,7 +210,8 @@ public:
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
 };
 
@@ -224,7 +229,8 @@ struct ImmChoice {
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
 };
 
@@ -238,7 +244,8 @@ struct LslShift {
     }
 
 private:
-    friend class CodeGenerator;
+    template<typename Policy>
+    friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
 };
 
