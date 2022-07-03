@@ -9,6 +9,10 @@ struct PostIndexed {};
 
 struct PreIndexed {};
 
+enum class LslSymbol {
+    LSL,
+};
+
 enum class Cond {
     EQ,
     NE,
@@ -30,7 +34,7 @@ enum class Cond {
     LO = CC,
 };
 
-Cond invert(Cond c)
+constexpr Cond invert(Cond c)
 {
     return static_cast<Cond>(static_cast<unsigned>(c) ^ 1);
 }

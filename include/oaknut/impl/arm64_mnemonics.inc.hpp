@@ -32,9 +32,17 @@ void ADD(WRegWsp wd, WRegWsp wn, AddSubImm imm)
 {
     emit<"000100010siiiiiiiiiiiinnnnnddddd", "d", "n", "si">(wd, wn, imm);
 }
+void ADD(WRegWsp wd, WRegWsp wn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    ADD(wd, wn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
+}
 void ADD(XRegSp xd, XRegSp xn, AddSubImm imm)
 {
     emit<"100100010siiiiiiiiiiiinnnnnddddd", "d", "n", "si">(xd, xn, imm);
+}
+void ADD(XRegSp xd, XRegSp xn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    ADD(xd, xn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
 }
 void ADD(WReg wd, WReg wn, WReg wm, AddSubShift shift = AddSubShift::LSL, Imm<5> shift_amount = 0)
 {
@@ -59,9 +67,17 @@ void ADDS(WReg wd, WRegWsp wn, AddSubImm imm)
 {
     emit<"001100010siiiiiiiiiiiinnnnnddddd", "d", "n", "si">(wd, wn, imm);
 }
+void ADDS(WReg wd, WRegWsp wn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    ADDS(wd, wn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
+}
 void ADDS(XReg xd, XRegSp xn, AddSubImm imm)
 {
     emit<"101100010siiiiiiiiiiiinnnnnddddd", "d", "n", "si">(xd, xn, imm);
+}
+void ADDS(XReg xd, XRegSp xn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    ADDS(xd, xn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
 }
 void ADDS(WReg wd, WReg wn, WReg wm, AddSubShift shift = AddSubShift::LSL, Imm<5> shift_amount = 0)
 {
@@ -171,13 +187,13 @@ void BFXIL(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
         throw "invalid width";
-    emit<"0011001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
+    emit<"0011001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void BFXIL(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
         throw "invalid width";
-    emit<"1011001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
+    emit<"1011001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void BIC(WReg wd, WReg wn, WReg wm, LogShift shift = LogShift::LSL, Imm<5> shift_amount = 0)
 {
@@ -261,27 +277,27 @@ void CCMP(XReg xn, XReg xm, Imm<4> nzcv, Cond cond)
 }
 void CINC(WReg wd, WReg wn, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
-    emit<"00011010100mmmmmcccc01nnnnnddddd", "d", "n", "c">(wd, wn, invert(cond));
+    emit<"00011010100mmmmmcccc01nnnnnddddd", "d", "n", "m", "c">(wd, wn, wn, invert(cond));
 }
 void CINC(XReg xd, XReg xn, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
-    emit<"10011010100mmmmmcccc01nnnnnddddd", "d", "n", "c">(xd, xn, invert(cond));
+    emit<"10011010100mmmmmcccc01nnnnnddddd", "d", "n", "m", "c">(xd, xn, xn, invert(cond));
 }
 void CINV(WReg wd, WReg wn, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
-    emit<"01011010100mmmmmcccc00nnnnnddddd", "d", "n", "c">(wd, wn, invert(cond));
+    emit<"01011010100mmmmmcccc00nnnnnddddd", "d", "n", "m", "c">(wd, wn, wn, invert(cond));
 }
 void CINV(XReg xd, XReg xn, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
-    emit<"11011010100mmmmmcccc00nnnnnddddd", "d", "n", "c">(xd, xn, invert(cond));
+    emit<"11011010100mmmmmcccc00nnnnnddddd", "d", "n", "m", "c">(xd, xn, xn, invert(cond));
 }
 void CLREX(Imm<4> imm = 15)
 {
@@ -318,9 +334,17 @@ void CMN(WRegWsp wn, AddSubImm imm)
 {
     emit<"001100010siiiiiiiiiiiinnnnn11111", "n", "si">(wn, imm);
 }
+void CMN(WRegWsp wn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    CMN(wn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
+}
 void CMN(XRegSp xn, AddSubImm imm)
 {
     emit<"101100010siiiiiiiiiiiinnnnn11111", "n", "si">(xn, imm);
+}
+void CMN(XRegSp xn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    CMN(xn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
 }
 void CMN(WReg wn, WReg wm, AddSubShift shift = AddSubShift::LSL, Imm<5> shift_amount = 0)
 {
@@ -345,9 +369,17 @@ void CMP(WRegWsp wn, AddSubImm imm)
 {
     emit<"011100010siiiiiiiiiiiinnnnn11111", "n", "si">(wn, imm);
 }
+void CMP(WRegWsp wn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    CMP(wn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
+}
 void CMP(XRegSp xn, AddSubImm imm)
 {
     emit<"111100010siiiiiiiiiiiinnnnn11111", "n", "si">(xn, imm);
+}
+void CMP(XRegSp xn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    CMP(xn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
 }
 void CMP(WReg wn, WReg wm, AddSubShift shift = AddSubShift::LSL, Imm<5> shift_amount = 0)
 {
@@ -359,15 +391,15 @@ void CMP(XReg xn, XReg xm, AddSubShift shift = AddSubShift::LSL, Imm<6> shift_am
 }
 void CNEG(WReg wd, WReg wn, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
-    emit<"01011010100mmmmmcccc01nnnnnddddd", "d", "n", "c">(wd, wn, invert(cond));
+    emit<"01011010100mmmmmcccc01nnnnnddddd", "d", "n", "m", "c">(wd, wn, wn, invert(cond));
 }
 void CNEG(XReg xd, XReg xn, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
-    emit<"11011010100mmmmmcccc01nnnnnddddd", "d", "n", "c">(xd, xn, invert(cond));
+    emit<"11011010100mmmmmcccc01nnnnnddddd", "d", "n", "m", "c">(xd, xn, xn, invert(cond));
 }
 void CRC32B(WReg wd, WReg wn, WReg wm)
 {
@@ -415,25 +447,25 @@ void CSEL(XReg xd, XReg xn, XReg xm, Cond cond)
 }
 void CSET(WReg wd, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
     emit<"0001101010011111cccc0111111ddddd", "d", "c">(wd, invert(cond));
 }
 void CSET(XReg xd, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
     emit<"1001101010011111cccc0111111ddddd", "d", "c">(xd, invert(cond));
 }
 void CSETM(WReg wd, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
     emit<"0101101010011111cccc0011111ddddd", "d", "c">(wd, invert(cond));
 }
 void CSETM(XReg xd, Cond cond)
 {
-    if (cond != Cond::AL && cond != Cond::NV)
+    if (cond == Cond::AL || cond == Cond::NV)
         throw "invalid Cond";
     emit<"1101101010011111cccc0011111ddddd", "d", "c">(xd, invert(cond));
 }
@@ -1219,13 +1251,13 @@ void SBFX(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
         throw "invalid width";
-    emit<"0001001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
+    emit<"0001001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void SBFX(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
         throw "invalid width";
-    emit<"1001001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
+    emit<"1001001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void SDIV(WReg wd, WReg wn, WReg wm)
 {
@@ -1482,9 +1514,17 @@ void SUB(WRegWsp wd, WRegWsp wn, AddSubImm imm)
 {
     emit<"010100010siiiiiiiiiiiinnnnnddddd", "d", "n", "si">(wd, wn, imm);
 }
+void SUB(WRegWsp wd, WRegWsp wn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    SUB(wd, wn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
+}
 void SUB(XRegSp xd, XRegSp xn, AddSubImm imm)
 {
     emit<"110100010siiiiiiiiiiiinnnnnddddd", "d", "n", "si">(xd, xn, imm);
+}
+void SUB(XRegSp xd, XRegSp xn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    SUB(xd, xn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
 }
 void SUB(WReg wd, WReg wn, WReg wm, AddSubShift shift = AddSubShift::LSL, Imm<5> shift_amount = 0)
 {
@@ -1509,9 +1549,17 @@ void SUBS(WReg wd, WRegWsp wn, AddSubImm imm)
 {
     emit<"011100010siiiiiiiiiiiinnnnnddddd", "d", "n", "si">(wd, wn, imm);
 }
+void SUBS(WReg wd, WRegWsp wn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    SUBS(wd, wn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
+}
 void SUBS(XReg xd, XRegSp xn, AddSubImm imm)
 {
     emit<"111100010siiiiiiiiiiiinnnnnddddd", "d", "n", "si">(xd, xn, imm);
+}
+void SUBS(XReg xd, XRegSp xn, Imm<12> imm, LslSymbol, ImmChoice<0, 12> shift_amount)
+{
+    SUBS(xd, xn, AddSubImm{imm.value(), static_cast<AddSubImmShift>(shift_amount.m_encoded)});
 }
 void SUBS(WReg wd, WReg wn, WReg wm, AddSubShift shift = AddSubShift::LSL, Imm<5> shift_amount = 0)
 {
@@ -1599,13 +1647,13 @@ void UBFX(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
         throw "invalid width";
-    emit<"0101001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
+    emit<"0101001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void UBFX(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
         throw "invalid width";
-    emit<"1101001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
+    emit<"1101001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void UDF(Imm<16> imm)
 {

@@ -32,7 +32,7 @@ public:
 
     static bool is_valid(std::uint32_t value_)
     {
-        return ((value_ & mask) != value_);
+        return ((value_ & mask) == value_);
     }
 
 private:
@@ -48,7 +48,7 @@ enum class AddSubImmShift {
 
 struct AddSubImm {
 public:
-    constexpr AddSubImm(std::uint16_t value_, AddSubImmShift shift_)
+    constexpr AddSubImm(std::uint32_t value_, AddSubImmShift shift_)
         : m_encoded(value_ | ((shift_ == AddSubImmShift::SHL_12) ? 1 << 12 : 0))
     {
         if ((value_ & 0xFFF) != value_)
@@ -152,23 +152,25 @@ constexpr std::optional<std::uint32_t> encode_bit_imm(std::uint64_t value)
         return std::nullopt;
 
     const std::size_t rotation = std::countr_zero(value & inverse_mask_from_trailing_ones(value));
+
     const std::uint64_t emask = mask_from_esize(esize);
     const std::uint64_t rot_element = std::rotr(value, rotation) & emask;
 
     if (!is_contiguous_mask_from_lsb(rot_element))
         return std::nullopt;
 
-    const std::uint32_t S = std::popcount(rot_element) - 1;
-    const std::uint32_t R = rotation & (esize - 1);
+    const std::uint32_t S = ((-esize) << 1) | (std::popcount(rot_element) - 1);
+    const std::uint32_t R = (esize - rotation) & (esize - 1);
+    const std::uint32_t N = (~S >> 6) & 1;
 
-    return static_cast<std::uint32_t>(((((-esize) << 7) | (S << 6) | R) ^ 0x1000) & 0x1fff);
+    return static_cast<std::uint32_t>((S & 0b111111) | (R << 6) | (N << 12));
 }
 
 constexpr std::optional<std::uint32_t> encode_bit_imm(std::uint32_t value)
 {
     const std::uint64_t value_u64 = (static_cast<std::uint64_t>(value) << 32) | static_cast<std::uint64_t>(value);
     const auto result = encode_bit_imm(value_u64);
-    if (result && (*result & 0x3FF) != *result)
+    if (result && (*result & 0b0'111111'111111) != *result)
         return std::nullopt;
     return result;
 }

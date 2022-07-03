@@ -86,14 +86,14 @@ struct WReg : public RReg {
     friend class BasicCodeGenerator;
 };
 
-XReg RReg::toX() const
+inline XReg RReg::toX() const
 {
     if (index() == -1)
         throw "cannot convert SP/WSP to XReg";
     return XReg{index()};
 }
 
-WReg RReg::toW() const
+inline WReg RReg::toW() const
 {
     if (index() == -1)
         throw "cannot convert SP/WSP to WReg";
