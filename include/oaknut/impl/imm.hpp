@@ -119,47 +119,21 @@ private:
 
 namespace detail {
 
-constexpr std::uint64_t mask_from_esize(std::size_t esize)
-{
-    return (~std::uint64_t{0}) >> (64 - esize);
-}
-
-constexpr std::uint64_t inverse_mask_from_trailing_ones(std::uint64_t value)
-{
-    return ~value | (value + 1);
-}
-
-constexpr std::uint64_t is_contiguous_mask_from_lsb(std::uint64_t value)
-{
-    return value && ((value + 1) & value) == 0;
-}
-
 constexpr std::optional<std::uint32_t> encode_bit_imm(std::uint64_t value)
 {
     if (value == 0 || (~value) == 0)
         return std::nullopt;
 
-    const std::size_t esize = [value] {
-        for (std::size_t esize = 64; esize > 1; esize /= 2) {
-            if (value != std::rotr(value, esize / 2)) {
-                return esize;
-            }
-        }
-        return std::size_t{0};
-    }();
+    const std::size_t rotation = std::countr_zero(value & (value + 1));
+    const std::uint64_t rot_value = std::rotr(value, rotation);
 
-    if (esize == 0)
+    const std::size_t esize = std::countr_zero(rot_value & (rot_value + 1));
+    const std::size_t ones = std::countr_one(rot_value);
+
+    if (std::rotr(value, esize) != value)
         return std::nullopt;
 
-    const std::size_t rotation = std::countr_zero(value & inverse_mask_from_trailing_ones(value));
-
-    const std::uint64_t emask = mask_from_esize(esize);
-    const std::uint64_t rot_element = std::rotr(value, rotation) & emask;
-
-    if (!is_contiguous_mask_from_lsb(rot_element))
-        return std::nullopt;
-
-    const std::uint32_t S = ((-esize) << 1) | (std::popcount(rot_element) - 1);
+    const std::uint32_t S = ((-esize) << 1) | (ones - 1);
     const std::uint32_t R = (esize - rotation) & (esize - 1);
     const std::uint32_t N = (~S >> 6) & 1;
 
