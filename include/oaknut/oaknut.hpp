@@ -99,6 +99,64 @@ public:
 #include "oaknut/impl/arm64_mnemonics.inc.hpp"
 #include "oaknut/impl/fpsimd_mnemonics.inc.hpp"
 
+    void RET()
+    {
+        return RET(XReg{30});
+    }
+
+    void MOV(WReg wd, uint32_t imm)
+    {
+        if (wd.index() == 31)
+            return;
+        if (MovImm16::is_valid(imm))
+            return MOVZ(wd, imm);
+        if (MovImm16::is_valid(~static_cast<std::uint64_t>(imm)))
+            return MOVN(wd, imm);
+        if (detail::encode_bit_imm(imm))
+            return ORR(wd, WzrReg{}, imm);
+
+        MOVZ(wd, {static_cast<std::uint16_t>(imm >> 0), MovImm16Shift::SHL_0});
+        MOVK(wd, {static_cast<std::uint16_t>(imm >> 16), MovImm16Shift::SHL_16});
+    }
+
+    void MOV(XReg xd, uint64_t imm)
+    {
+        if (xd.index() == 31)
+            return;
+        if (imm >> 32 == 0)
+            return MOV(xd.toW(), static_cast<std::uint32_t>(imm));
+        if (MovImm16::is_valid(imm))
+            return MOVZ(xd, imm);
+        if (MovImm16::is_valid(~imm))
+            return MOVN(xd, imm);
+        if (detail::encode_bit_imm(imm))
+            return ORR(xd, ZrReg{}, imm);
+
+        bool movz_done = false;
+        int shift_count = 0;
+
+        if (detail::encode_bit_imm(static_cast<std::uint32_t>(imm))) {
+            ORR(xd.toW(), WzrReg{}, static_cast<std::uint32_t>(imm));
+            imm >>= 32;
+            movz_done = true;
+            shift_count = 2;
+        }
+
+        while (imm != 0) {
+            const uint16_t hw = static_cast<uint16_t>(imm);
+            if (hw != 0) {
+                if (movz_done) {
+                    MOVK(xd, {hw, static_cast<MovImm16Shift>(shift_count)});
+                } else {
+                    MOVZ(xd, {hw, static_cast<MovImm16Shift>(shift_count)});
+                    movz_done = true;
+                }
+            }
+            imm >>= 16;
+            shift_count++;
+        }
+    }
+
 private:
 #include "oaknut/impl/arm64_encode_helpers.inc.hpp"
 

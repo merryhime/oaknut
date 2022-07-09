@@ -8,19 +8,20 @@
 
 #include "oaknut/code_block.hpp"
 #include "oaknut/oaknut.hpp"
+#include "rand_int.hpp"
+
+using namespace oaknut;
+using namespace oaknut::util;
 
 TEST_CASE("Basic Test")
 {
-    using namespace oaknut;
-    using namespace oaknut::util;
-
     CodeBlock mem{4096};
     CodeGenerator code{mem.ptr()};
 
     mem.unprotect();
 
-    code.MOVZ(W0, 42);
-    code.RET(X30);
+    code.MOV(W0, 42);
+    code.RET();
 
     mem.protect();
     mem.invalidate_all();
@@ -31,9 +32,6 @@ TEST_CASE("Basic Test")
 
 TEST_CASE("Fibonacci")
 {
-    using namespace oaknut;
-    using namespace oaknut::util;
-
     CodeBlock mem{4096};
     CodeGenerator code{mem.ptr()};
 
@@ -50,7 +48,7 @@ TEST_CASE("Fibonacci")
     code.SUBS(W0, W0, 1);
     code.B(LT, zero);
     code.B(NE, recurse);
-    code.MOVZ(W0, 1);
+    code.MOV(W0, 1);
     code.B(end);
 
     code.l(zero);
@@ -67,7 +65,7 @@ TEST_CASE("Fibonacci")
     code.l(end);
     code.LDP(X20, X19, SP, 16);
     code.LDP(X29, X30, SP, POST_INDEXED, 32);
-    code.RET(X30);
+    code.RET();
 
     mem.protect();
     mem.invalidate_all();
@@ -76,4 +74,44 @@ TEST_CASE("Fibonacci")
     REQUIRE(fib(1) == 1);
     REQUIRE(fib(5) == 5);
     REQUIRE(fib(9) == 34);
+}
+
+TEST_CASE("Immediate generation (32-bit)")
+{
+    CodeBlock mem{4096};
+
+    for (int i = 0; i < 0x100000; i++) {
+        const std::uint32_t value = RandInt<std::uint32_t>(0, 0xffffffff);
+
+        CodeGenerator code{mem.ptr()};
+
+        auto f = code.ptr<std::uint64_t (*)()>();
+        mem.unprotect();
+        code.MOV(W0, value);
+        code.RET();
+        mem.protect();
+        mem.invalidate_all();
+
+        REQUIRE(f() == value);
+    }
+}
+
+TEST_CASE("Immediate generation (64-bit)")
+{
+    CodeBlock mem{4096};
+
+    for (int i = 0; i < 0x100000; i++) {
+        const std::uint64_t value = RandInt<std::uint64_t>(0, 0xffffffff'ffffffff);
+
+        CodeGenerator code{mem.ptr()};
+
+        auto f = code.ptr<std::uint64_t (*)()>();
+        mem.unprotect();
+        code.MOV(X0, value);
+        code.RET();
+        mem.protect();
+        mem.invalidate_all();
+
+        REQUIRE(f() == value);
+    }
 }

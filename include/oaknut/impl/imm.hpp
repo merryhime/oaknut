@@ -114,7 +114,7 @@ public:
 private:
     template<typename Policy>
     friend class BasicCodeGenerator;
-    std::uint32_t m_encoded;
+    std::uint32_t m_encoded = 0;
 };
 
 namespace detail {
