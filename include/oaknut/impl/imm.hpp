@@ -191,8 +191,58 @@ private:
     std::uint32_t m_encoded;
 };
 
+struct FImm8 {
+public:
+    constexpr explicit FImm8(std::uint8_t encoded)
+        : m_encoded(encoded)
+    {}
+
+    constexpr FImm8(bool sign, Imm<3> exp, Imm<4> mantissa)
+        : m_encoded((sign ? 1 << 7 : 0) | (exp.value() << 4) | (mantissa.value()))
+    {}
+
+private:
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+    std::uint32_t m_encoded;
+};
+
+struct RepImm {
+public:
+    constexpr explicit RepImm(std::uint8_t encoded)
+        : m_encoded(encoded)
+    {}
+
+private:
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+    std::uint32_t m_encoded;
+};
+
+template<int A>
+struct ImmConst {
+    constexpr /* implicit */ ImmConst(int value)
+    {
+        if (value != A) {
+            throw "invalid ImmConst";
+        }
+    }
+};
+
+struct ImmConstFZero {
+    constexpr /* implicit */ ImmConstFZero(double value)
+    {
+        if (value != 0) {
+            throw "invalid ImmConstFZero";
+        }
+    }
+};
+
+template<int...>
+struct ImmChoice;
+
 template<int A, int B>
-struct ImmChoice {
+struct ImmChoice<A, B> {
     constexpr /* implicit */ ImmChoice(int value)
     {
         if (value == A) {
@@ -208,6 +258,45 @@ private:
     template<typename Policy>
     friend class BasicCodeGenerator;
     std::uint32_t m_encoded;
+};
+
+template<int A, int B, int C, int D>
+struct ImmChoice<A, B, C, D> {
+    constexpr /* implicit */ ImmChoice(int value)
+    {
+        if (value == A) {
+            m_encoded = 0;
+        } else if (value == B) {
+            m_encoded = 1;
+        } else if (value == C) {
+            m_encoded = 2;
+        } else if (value == D) {
+            m_encoded = 3;
+        } else {
+            throw "invalid ImmChoice";
+        }
+    }
+
+private:
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+    std::uint32_t m_encoded;
+};
+
+template<unsigned Start, unsigned End>
+struct ImmRange {
+    constexpr /* implicit */ ImmRange(unsigned value_)
+        : m_value(value_)
+    {
+        if (value_ < Start || value_ > End) {
+            throw "invalid ImmRange";
+        }
+    }
+
+    constexpr unsigned value() const { return m_value; }
+
+private:
+    unsigned m_value;
 };
 
 template<std::size_t max_value>

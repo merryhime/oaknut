@@ -12,6 +12,7 @@
 
 #include "oaknut/impl/enum.hpp"
 #include "oaknut/impl/imm.hpp"
+#include "oaknut/impl/list.hpp"
 #include "oaknut/impl/multi_typed_name.hpp"
 #include "oaknut/impl/offset.hpp"
 #include "oaknut/impl/reg.hpp"
@@ -96,6 +97,7 @@ public:
     }
 
 #include "oaknut/impl/arm64_mnemonics.inc.hpp"
+#include "oaknut/impl/fpsimd_mnemonics.inc.hpp"
 
 private:
 #include "oaknut/impl/arm64_encode_helpers.inc.hpp"
@@ -215,6 +217,13 @@ inline constexpr WzrReg WZR{};
 inline constexpr SpReg SP{}, XSP{};
 inline constexpr WspReg WSP{};
 
+inline constexpr VRegSelector V0{0}, V1{1}, V2{2}, V3{3}, V4{4}, V5{5}, V6{6}, V7{7}, V8{8}, V9{9}, V10{10}, V11{11}, V12{12}, V13{13}, V14{14}, V15{15}, V16{16}, V17{17}, V18{18}, V19{19}, V20{20}, V21{21}, V22{22}, V23{23}, V24{24}, V25{25}, V26{26}, V27{27}, V28{28}, V29{29}, V30{30}, V31{31};
+inline constexpr QReg Q0{0}, Q1{1}, Q2{2}, Q3{3}, Q4{4}, Q5{5}, Q6{6}, Q7{7}, Q8{8}, Q9{9}, Q10{10}, Q11{11}, Q12{12}, Q13{13}, Q14{14}, Q15{15}, Q16{16}, Q17{17}, Q18{18}, Q19{19}, Q20{20}, Q21{21}, Q22{22}, Q23{23}, Q24{24}, Q25{25}, Q26{26}, Q27{27}, Q28{28}, Q29{29}, Q30{30}, Q31{31};
+inline constexpr DReg D0{0}, D1{1}, D2{2}, D3{3}, D4{4}, D5{5}, D6{6}, D7{7}, D8{8}, D9{9}, D10{10}, D11{11}, D12{12}, D13{13}, D14{14}, D15{15}, D16{16}, D17{17}, D18{18}, D19{19}, D20{20}, D21{21}, D22{22}, D23{23}, D24{24}, D25{25}, D26{26}, D27{27}, D28{28}, D29{29}, D30{30}, D31{31};
+inline constexpr SReg S0{0}, S1{1}, S2{2}, S3{3}, S4{4}, S5{5}, S6{6}, S7{7}, S8{8}, S9{9}, S10{10}, S11{11}, S12{12}, S13{13}, S14{14}, S15{15}, S16{16}, S17{17}, S18{18}, S19{19}, S20{20}, S21{21}, S22{22}, S23{23}, S24{24}, S25{25}, S26{26}, S27{27}, S28{28}, S29{29}, S30{30}, S31{31};
+inline constexpr HReg H0{0}, H1{1}, H2{2}, H3{3}, H4{4}, H5{5}, H6{6}, H7{7}, H8{8}, H9{9}, H10{10}, H11{11}, H12{12}, H13{13}, H14{14}, H15{15}, H16{16}, H17{17}, H18{18}, H19{19}, H20{20}, H21{21}, H22{22}, H23{23}, H24{24}, H25{25}, H26{26}, H27{27}, H28{28}, H29{29}, H30{30}, H31{31};
+inline constexpr BReg B0{0}, B1{1}, B2{2}, B3{3}, B4{4}, B5{5}, B6{6}, B7{7}, B8{8}, B9{9}, B10{10}, B11{11}, B12{12}, B13{13}, B14{14}, B15{15}, B16{16}, B17{17}, B18{18}, B19{19}, B20{20}, B21{21}, B22{22}, B23{23}, B24{24}, B25{25}, B26{26}, B27{27}, B28{28}, B29{29}, B30{30}, B31{31};
+
 inline constexpr Cond EQ{Cond::EQ}, NE{Cond::NE}, CS{Cond::CS}, CC{Cond::CC}, MI{Cond::MI}, PL{Cond::PL}, VS{Cond::VS}, VC{Cond::VC}, HI{Cond::HI}, LS{Cond::LS}, GE{Cond::GE}, LT{Cond::LT}, GT{Cond::GT}, LE{Cond::LE}, AL{Cond::AL}, NV{Cond::NV}, HS{Cond::HS}, LO{Cond::LO};
 
 inline constexpr auto UXTB{MultiTypedName<AddSubExt::UXTB>{}};
@@ -232,6 +241,7 @@ inline constexpr auto ROR{MultiTypedName<LogShift::ROR>{}};
 
 inline constexpr PostIndexed POST_INDEXED{};
 inline constexpr PreIndexed PRE_INDEXED{};
+inline constexpr MslSymbol MSL{MslSymbol::MSL};
 
 }  // namespace util
 

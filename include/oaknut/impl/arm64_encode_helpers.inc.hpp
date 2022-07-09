@@ -23,16 +23,16 @@ static constexpr std::uint32_t pdep(std::uint32_t val)
     }
 
 OAKNUT_STD_ENCODE(RReg, v.index() & 31, 5)
-OAKNUT_STD_ENCODE(XReg, v.index() & 31, 5)
-OAKNUT_STD_ENCODE(WReg, v.index() & 31, 5)
-OAKNUT_STD_ENCODE(XRegSp, v.index() & 31, 5)
-OAKNUT_STD_ENCODE(WRegWsp, v.index() & 31, 5)
+OAKNUT_STD_ENCODE(VReg, v.index() & 31, 5)
+OAKNUT_STD_ENCODE(VRegArranged, v.index() & 31, 5)
 
 OAKNUT_STD_ENCODE(AddSubImm, v.m_encoded, 13)
 OAKNUT_STD_ENCODE(BitImm32, v.m_encoded, 12)
 OAKNUT_STD_ENCODE(BitImm64, v.m_encoded, 13)
 OAKNUT_STD_ENCODE(LslShift<32>, v.m_encoded, 12)
 OAKNUT_STD_ENCODE(LslShift<64>, v.m_encoded, 12)
+OAKNUT_STD_ENCODE(FImm8, v.m_encoded, 8)
+OAKNUT_STD_ENCODE(RepImm, v.m_encoded, 8)
 
 OAKNUT_STD_ENCODE(Cond, v, 4)
 OAKNUT_STD_ENCODE(AddSubExt, v, 3)
@@ -74,6 +74,13 @@ std::uint32_t encode(ImmChoice<A, B> v)
     return pdep<splat>(v.m_encoded);
 }
 
+template<std::uint32_t splat, int A, int B, int C, int D>
+std::uint32_t encode(ImmChoice<A, B, C, D> v)
+{
+    static_assert(std::popcount(splat) == 2);
+    return pdep<splat>(v.m_encoded);
+}
+
 template<std::uint32_t splat, std::size_t size, std::size_t align>
 std::uint32_t encode(SOffset<size, align> v)
 {
@@ -92,6 +99,12 @@ template<std::uint32_t splat>
 std::uint32_t encode(std::uint32_t v)
 {
     return pdep<splat>(v);
+}
+
+template<std::uint32_t splat, typename T, size_t N>
+std::uint32_t encode(List<T, N> v)
+{
+    return encode<splat>(v.m_base);
 }
 
 #undef OAKNUT_STD_ENCODE

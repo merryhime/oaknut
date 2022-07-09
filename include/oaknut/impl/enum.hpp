@@ -13,6 +13,10 @@ enum class LslSymbol {
     LSL,
 };
 
+enum class MslSymbol {
+    MSL,
+};
+
 enum class Cond {
     EQ,
     NE,
