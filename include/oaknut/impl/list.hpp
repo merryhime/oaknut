@@ -32,7 +32,7 @@ struct BaseOnlyTag {};
 template<typename T, std::size_t N>
 struct List {
     template<typename... U>
-    explicit List(U... args)
+    constexpr explicit List(U... args)
         : m_base(std::get<0>(std::tie(args...)))
     {
         static_assert((std::is_same_v<T, U> && ...));
@@ -55,12 +55,12 @@ private:
     template<typename, std::size_t>
     friend struct List;
 
-    explicit List(detail::BaseOnlyTag, T base_)
+    constexpr explicit List(detail::BaseOnlyTag, T base_)
         : m_base(base_)
     {}
 
     template<typename... U, std::size_t... indexes>
-    bool verify(std::index_sequence<indexes...>, U... args)
+    constexpr bool verify(std::index_sequence<indexes...>, U... args)
     {
         if constexpr (std::is_base_of_v<VRegArranged, T>) {
             return (((m_base.index() + indexes) % 32 == static_cast<std::size_t>(args.index())) && ...);
