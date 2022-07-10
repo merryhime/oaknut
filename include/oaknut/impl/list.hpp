@@ -63,11 +63,11 @@ private:
     bool verify(std::index_sequence<indexes...>, U... args)
     {
         if constexpr (std::is_base_of_v<VRegArranged, T>) {
-            return (((m_base.index() + indexes) % 32 == args.index()) && ...);
+            return (((m_base.index() + indexes) % 32 == static_cast<std::size_t>(args.index())) && ...);
         } else if constexpr (std::is_base_of_v<Elem, T>) {
-            return (((m_base.reg_index() + indexes) % 32 == args.reg_index() && m_base.elem_index() == args.elem_index()) && ...);
+            return (((m_base.reg_index() + indexes) % 32 == static_cast<std::size_t>(args.reg_index()) && m_base.elem_index() == args.elem_index()) && ...);
         } else {
-            return (((m_base.reg_index() + indexes) % 32 == args.reg_index()) && ...);
+            return (((m_base.reg_index() + indexes) % 32 == static_cast<std::size_t>(args.reg_index())) && ...);
         }
     }
 
