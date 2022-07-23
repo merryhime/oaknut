@@ -159,6 +159,11 @@ public:
         }
     }
 
+    void dw(std::uint32_t value)
+    {
+        Policy::append(value);
+    }
+
 private:
 #include "oaknut/impl/arm64_encode_helpers.inc.hpp"
 
