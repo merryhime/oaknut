@@ -174,6 +174,12 @@ public:
         Policy::append(value);
     }
 
+    void dx(std::uint64_t value)
+    {
+        Policy::append(static_cast<std::uint32_t>(value));
+        Policy::append(static_cast<std::uint32_t>(value >> 32));
+    }
+
 private:
 #include "oaknut/impl/arm64_encode_helpers.inc.hpp"
 
