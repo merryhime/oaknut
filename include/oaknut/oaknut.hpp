@@ -159,6 +159,16 @@ public:
         }
     }
 
+    void align(std::size_t alignment)
+    {
+        if (alignment < 4 || (alignment & (alignment - 1)) != 0)
+            throw "invalid alignment";
+
+        while (Policy::template ptr<std::uintptr_t>() & (alignment - 1)) {
+            NOP();
+        }
+    }
+
     void dw(std::uint32_t value)
     {
         Policy::append(value);
@@ -235,7 +245,7 @@ public:
     template<typename T>
     T ptr()
     {
-        static_assert(std::is_pointer_v<T>);
+        static_assert(std::is_pointer_v<T> || std::is_same_v<T, std::uintptr_t> || std::is_same_v<T, std::intptr_t>);
         return reinterpret_cast<T>(m_ptr);
     }
 
