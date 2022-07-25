@@ -200,51 +200,6 @@ private:
     int m_esize : 8;
 };
 
-struct BReg : public VReg {
-    constexpr explicit BReg(int index_)
-        : VReg(8, index_)
-    {}
-
-    template<typename Policy>
-    friend class BasicCodeGenerator;
-};
-
-struct HReg : public VReg {
-    constexpr explicit HReg(int index_)
-        : VReg(16, index_)
-    {}
-
-    template<typename Policy>
-    friend class BasicCodeGenerator;
-};
-
-struct SReg : public VReg {
-    constexpr explicit SReg(int index_)
-        : VReg(32, index_)
-    {}
-
-    template<typename Policy>
-    friend class BasicCodeGenerator;
-};
-
-struct DReg : public VReg {
-    constexpr explicit DReg(int index_)
-        : VReg(64, index_)
-    {}
-
-    template<typename Policy>
-    friend class BasicCodeGenerator;
-};
-
-struct QReg : public VReg {
-    constexpr explicit QReg(int index_)
-        : VReg(128, index_)
-    {}
-
-    template<typename Policy>
-    friend class BasicCodeGenerator;
-};
-
 struct VReg_8B : public VRegArranged {
     constexpr explicit VReg_8B(int reg_index_)
         : VRegArranged(64, reg_index_, 64 / 8)
@@ -344,20 +299,6 @@ private:
     unsigned m_elem_index;
 };
 
-template<typename E>
-struct ElemSelector {
-    constexpr explicit ElemSelector(int reg_index_)
-        : m_reg_index(reg_index_)
-    {}
-
-    constexpr int reg_index() const { return m_reg_index; }
-
-    constexpr E operator[](unsigned elem_index) const { return E{m_reg_index, elem_index}; }
-
-private:
-    int m_reg_index;
-};
-
 struct BElem : public Elem {
     constexpr explicit BElem(int reg_, unsigned elem_index_)
         : Elem(2, reg_, elem_index_)
@@ -389,6 +330,86 @@ struct DElem_1 : public DElem {
         if (inner.elem_index() != 1)
             throw "invalid DElem_1";
     }
+};
+
+template<typename E>
+struct ElemSelector {
+    constexpr explicit ElemSelector(int reg_index_)
+        : m_reg_index(reg_index_)
+    {}
+
+    constexpr int reg_index() const { return m_reg_index; }
+
+    constexpr E operator[](unsigned elem_index) const { return E{m_reg_index, elem_index}; }
+
+private:
+    int m_reg_index;
+};
+
+struct BReg : public VReg {
+    constexpr explicit BReg(int index_)
+        : VReg(8, index_)
+    {}
+
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+};
+
+struct HReg : public VReg {
+    constexpr explicit HReg(int index_)
+        : VReg(16, index_)
+    {}
+
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+};
+
+struct SReg : public VReg {
+    constexpr explicit SReg(int index_)
+        : VReg(32, index_)
+    {}
+
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+};
+
+struct DReg : public VReg {
+    constexpr explicit DReg(int index_)
+        : VReg(64, index_)
+    {}
+
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+
+    constexpr ElemSelector<BElem> Belem() const { return ElemSelector<BElem>(index()); }
+    constexpr ElemSelector<HElem> Helem() const { return ElemSelector<HElem>(index()); }
+    constexpr ElemSelector<SElem> Selem() const { return ElemSelector<SElem>(index()); }
+    constexpr ElemSelector<DElem> Delem() const { return ElemSelector<DElem>(index()); }
+
+    constexpr VReg_8B B8() const { return VReg_8B{index()}; }
+    constexpr VReg_4H H4() const { return VReg_4H{index()}; }
+    constexpr VReg_2S S2() const { return VReg_2S{index()}; }
+    constexpr VReg_1D D1() const { return VReg_1D{index()}; }
+};
+
+struct QReg : public VReg {
+    constexpr explicit QReg(int index_)
+        : VReg(128, index_)
+    {}
+
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+
+    constexpr ElemSelector<BElem> Belem() const { return ElemSelector<BElem>(index()); }
+    constexpr ElemSelector<HElem> Helem() const { return ElemSelector<HElem>(index()); }
+    constexpr ElemSelector<SElem> Selem() const { return ElemSelector<SElem>(index()); }
+    constexpr ElemSelector<DElem> Delem() const { return ElemSelector<DElem>(index()); }
+
+    constexpr VReg_16B B16() const { return VReg_16B{index()}; }
+    constexpr VReg_8H H8() const { return VReg_8H{index()}; }
+    constexpr VReg_4S S4() const { return VReg_4S{index()}; }
+    constexpr VReg_2D D2() const { return VReg_2D{index()}; }
+    constexpr VReg_1Q Q1() const { return VReg_1Q{index()}; }
 };
 
 constexpr BReg VReg::toB() const
