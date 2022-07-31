@@ -112,8 +112,8 @@ public:
             return;
         if (MovImm16::is_valid(imm))
             return MOVZ(wd, imm);
-        if (MovImm16::is_valid(~static_cast<std::uint64_t>(imm)))
-            return MOVN(wd, imm);
+        if (MovImm16::is_valid(~imm))
+            return MOVN(wd, ~imm);
         if (detail::encode_bit_imm(imm))
             return ORR(wd, WzrReg{}, imm);
 
@@ -130,7 +130,7 @@ public:
         if (MovImm16::is_valid(imm))
             return MOVZ(xd, imm);
         if (MovImm16::is_valid(~imm))
-            return MOVN(xd, imm);
+            return MOVN(xd, ~imm);
         if (detail::encode_bit_imm(imm))
             return ORR(xd, ZrReg{}, imm);
 
