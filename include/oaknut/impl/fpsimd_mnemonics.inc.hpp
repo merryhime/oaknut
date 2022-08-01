@@ -4046,11 +4046,11 @@ void MOV(XReg xd, DElem en)
 }
 void MOV(VReg_8B rd, VReg_8B rn)
 {
-    emit<"00001110101mmmmm000111nnnnnddddd", "d", "n">(rd, rn);
+    emit<"00001110101mmmmm000111nnnnnddddd", "d", "n", "m">(rd, rn, rn);
 }
 void MOV(VReg_16B rd, VReg_16B rn)
 {
-    emit<"01001110101mmmmm000111nnnnnddddd", "d", "n">(rd, rn);
+    emit<"01001110101mmmmm000111nnnnnddddd", "d", "n", "m">(rd, rn, rn);
 }
 void MOVI(VReg_8B rd, Imm<8> imm, LslSymbol = LslSymbol::LSL, ImmConst<0> = 0)
 {
@@ -8279,7 +8279,7 @@ void UMOV(WReg wd, SElem en)
 }
 void UMOV(XReg xd, DElem en)
 {
-    emit<"01001110000i1000001111nnnnnddddd", "d", "n", "x">(xd, en.reg_index(), en.elem_index());
+    emit<"01001110000x1000001111nnnnnddddd", "d", "n", "x">(xd, en.reg_index(), en.elem_index());
 }
 void UMULL(VReg_4S rd, VReg_4H rn, HElem em)
 {
