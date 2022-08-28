@@ -1,6 +1,6 @@
 # Oaknut
 
-*A C++20 assembler for AArch64 (ARMv8.0)*
+*A C++20 assembler for AArch64 (ARMv8.1)*
 
 Oaknut is a header-only library that allows one to dynamically assemble code in-memory at runtime.
 

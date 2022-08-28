@@ -18,11 +18,13 @@ endif()
 # Source project files
 set(header_files
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/arm64_encode_helpers.inc.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/arm64_mnemonics.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/enum.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/fpsimd_mnemonics.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/imm.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/list.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_fpsimd_v8.0.inc.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_fpsimd_v8.1.inc.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_generic_v8.0.inc.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_generic_v8.1.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/multi_typed_name.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/offset.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/reg.hpp
