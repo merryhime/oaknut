@@ -1,6 +1,6 @@
 # Oaknut
 
-*A C++20 assembler for AArch64 (ARMv8.1)*
+*A C++20 assembler for AArch64 (ARMv8.0 to ARMv8.2)*
 
 Oaknut is a header-only library that allows one to dynamically assemble code in-memory at runtime.
 
@@ -51,6 +51,7 @@ int main()
 Each AArch64 instruction corresponds to one emitter function. For a list of emitter functions see:
 * ARMv8.0: [general instructions](include/oaknut/impl/mnemonics_generic_v8.0.inc.hpp), [FP & SIMD instructions](include/oaknut/impl/mnemonics_fpsimd_v8.0.inc.hpp)
 * ARMv8.1: [general instructions](include/oaknut/impl/mnemonics_generic_v8.1.inc.hpp), [FP & SIMD instructions](include/oaknut/impl/mnemonics_fpsimd_v8.1.inc.hpp)
+* ARMv8.2: [general instructions](include/oaknut/impl/mnemonics_generic_v8.2.inc.hpp), [FP & SIMD instructions](include/oaknut/impl/mnemonics_fpsimd_v8.2.inc.hpp)
 
 ### Operands
 
@@ -60,10 +61,10 @@ The `oaknut::util` namespace provides convenient names for operands for instruct
 |----|----|----|
 |W0, W1, ..., W30|`WReg`|32-bit general purpose registers|
 |X0, X1, ..., X30|`XReg`|64-bit general purpose registers|
-|WZR|WzrReg (convertable to `WReg`)|32-bit zero register|
-|XZR|ZrReg (convertable to `XReg`)|64-bit zero register|
-|WSP|WspReg (convertable to `WRegSp`)|32-bit stack pointer|
-|SP|SpReg (convertable to `XRegSp`)|64-bit stack pointer|
+|WZR|`WzrReg` (convertable to `WReg`)|32-bit zero register|
+|XZR|`ZrReg` (convertable to `XReg`)|64-bit zero register|
+|WSP|`WspReg` (convertable to `WRegSp`)|32-bit stack pointer|
+|SP|`SpReg` (convertable to `XRegSp`)|64-bit stack pointer|
 |B0, B1, ..., B31|`BReg`|8-bit scalar SIMD register|
 |H0, H1, ..., H31|`HReg`|16-bit scalar SIMD register|
 |S0, S1, ..., S31|`SReg`|32-bit scalar SIMD register|
@@ -74,14 +75,14 @@ For vector operations, you can specify registers like so:
 
 |Name|Class|  |
 |----|----|----|
-|V0.B8(), ...|`VReg_B8`|8 elements each 8 bits in size|
-|V0.B16(), ...|`VReg_B16`|16 elements each 8 bits in size|
-|V0.H4(), ...|`VReg_H4`|4 elements each 16 bits in size|
-|V0.H8(), ...|`VReg_H8`|8 elements each 16 bits in size|
-|V0.S2(), ...|`VReg_S2`|2 elements each 32 bits in size|
-|V0.S4(), ...|`VReg_S4`|4 elements each 32 bits in size|
-|V0.D1(), ...|`VReg_D1`|1 elements each 64 bits in size|
-|V0.D2(), ...|`VReg_D2`|2 elements each 64 bits in size|
+|V0.B8(), ...|`VReg_8B`|8 elements each 8 bits in size|
+|V0.B16(), ...|`VReg_16B`|16 elements each 8 bits in size|
+|V0.H4(), ...|`VReg_4H`|4 elements each 16 bits in size|
+|V0.H8(), ...|`VReg_8H`|8 elements each 16 bits in size|
+|V0.S2(), ...|`VReg_2S`|2 elements each 32 bits in size|
+|V0.S4(), ...|`VReg_4S`|4 elements each 32 bits in size|
+|V0.D1(), ...|`VReg_1D`|1 elements each 64 bits in size|
+|V0.D2(), ...|`VReg_2D`|2 elements each 64 bits in size|
 
 And you can specify elements like so:
 

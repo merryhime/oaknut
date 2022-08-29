@@ -28,6 +28,7 @@ struct HReg;
 struct SReg;
 struct DReg;
 struct QReg;
+struct VReg_2H;
 struct VReg_8B;
 struct VReg_4H;
 struct VReg_2S;
@@ -185,10 +186,10 @@ struct VReg : public Reg {
 };
 
 struct VRegArranged : public Reg {
+protected:
     constexpr explicit VRegArranged(unsigned bitsize_, int index_, unsigned esize_)
         : Reg(true, bitsize_, index_), m_esize(esize_)
     {
-        assert(bitsize_ == 64 || bitsize_ == 128);
         assert(esize_ != 0 && (esize_ & (esize_ - 1)) == 0 && "esize must be a power of two");
         assert(esize_ <= bitsize_);
     }
@@ -198,6 +199,15 @@ struct VRegArranged : public Reg {
 
 private:
     int m_esize : 8;
+};
+
+struct VReg_2H : public VRegArranged {
+    constexpr explicit VReg_2H(int reg_index_)
+        : VRegArranged(32, reg_index_, 32 / 2)
+    {}
+
+    template<typename Policy>
+    friend class BasicCodeGenerator;
 };
 
 struct VReg_8B : public VRegArranged {
@@ -445,6 +455,7 @@ struct VRegSelector {
     constexpr ElemSelector<SElem> S() const { return ElemSelector<SElem>(index()); }
     constexpr ElemSelector<DElem> D() const { return ElemSelector<DElem>(index()); }
 
+    constexpr VReg_2H H2() const { return VReg_2H{index()}; }
     constexpr VReg_8B B8() const { return VReg_8B{index()}; }
     constexpr VReg_4H H4() const { return VReg_4H{index()}; }
     constexpr VReg_2S S2() const { return VReg_2S{index()}; }

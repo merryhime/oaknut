@@ -100,8 +100,10 @@ public:
 
 #include "oaknut/impl/mnemonics_fpsimd_v8.0.inc.hpp"
 #include "oaknut/impl/mnemonics_fpsimd_v8.1.inc.hpp"
+#include "oaknut/impl/mnemonics_fpsimd_v8.2.inc.hpp"
 #include "oaknut/impl/mnemonics_generic_v8.0.inc.hpp"
 #include "oaknut/impl/mnemonics_generic_v8.1.inc.hpp"
+#include "oaknut/impl/mnemonics_generic_v8.2.inc.hpp"
 
     void RET()
     {
