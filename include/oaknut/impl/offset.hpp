@@ -64,7 +64,7 @@ private:
     std::variant<std::uint32_t, Label*, void*> m_payload;
 };
 
-template<std::size_t bitsize>
+template<std::size_t bitsize, std::size_t shift_amount>
 struct PageOffset {
     PageOffset(void* ptr)
         : m_payload(ptr)
@@ -76,10 +76,11 @@ struct PageOffset {
 
     static std::uint32_t encode(std::uintptr_t current_addr, std::uintptr_t target)
     {
-        const std::int64_t page_diff = (static_cast<std::int64_t>(target) >> 12) - (static_cast<std::int64_t>(current_addr) >> 12);
-        if (detail::sign_extend<bitsize>(page_diff) != page_diff)
+        std::uint64_t diff = (static_cast<std::uint64_t>(target) >> shift_amount) - (static_cast<std::uint64_t>(current_addr) >> shift_amount);
+        if (detail::sign_extend<bitsize>(diff) != diff)
             throw "out of range";
-        return static_cast<std::uint32_t>(page_diff & detail::mask_from_size(bitsize));
+        diff &= detail::mask_from_size(bitsize);
+        return static_cast<std::uint32_t>(((diff & 3) << (bitsize - 2)) | (diff >> 2));
     }
 
 private:

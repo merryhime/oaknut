@@ -115,3 +115,47 @@ TEST_CASE("Immediate generation (64-bit)")
         REQUIRE(f() == value);
     }
 }
+
+TEST_CASE("ADR")
+{
+    CodeBlock mem{4096};
+
+    for (std::int64_t i = -1048576; i < 1048576; i++) {
+        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + i;
+
+        CodeGenerator code{mem.ptr()};
+
+        auto f = code.ptr<std::intptr_t (*)()>();
+        mem.unprotect();
+        code.ADR(X0, reinterpret_cast<void*>(value));
+        code.RET();
+        mem.protect();
+        mem.invalidate_all();
+
+        INFO(i);
+        REQUIRE(f() == value);
+    }
+}
+
+TEST_CASE("ADRP")
+{
+    CodeBlock mem{4096};
+
+    for (int i = 0; i < 0x200000; i++) {
+        const std::int64_t diff = RandInt<std::int64_t>(-4294967296, 4294967295);
+        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + diff;
+        const std::uint64_t expect = static_cast<std::uint64_t>(value) & ~static_cast<std::uint64_t>(0xfff);
+
+        CodeGenerator code{mem.ptr()};
+
+        auto f = code.ptr<std::uint64_t (*)()>();
+        mem.unprotect();
+        code.ADRP(X0, reinterpret_cast<void*>(value));
+        code.RET();
+        mem.protect();
+        mem.invalidate_all();
+
+        INFO(i);
+        REQUIRE(f() == expect);
+    }
+}

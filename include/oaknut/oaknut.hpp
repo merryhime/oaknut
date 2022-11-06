@@ -224,13 +224,13 @@ private:
                           v.m_payload);
     }
 
-    template<std::uint32_t splat, std::size_t size>
-    std::uint32_t encode(PageOffset<size> v)
+    template<std::uint32_t splat, std::size_t size, std::size_t shift_amount>
+    std::uint32_t encode(PageOffset<size, shift_amount> v)
     {
         static_assert(std::popcount(splat) == size);
 
         const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
-            return pdep<splat>(PageOffset<size>::encode(current_addr, target));
+            return pdep<splat>(PageOffset<size, shift_amount>::encode(current_addr, target));
         };
 
         return std::visit(detail::overloaded{

@@ -87,11 +87,11 @@ void ADDS(XReg xd, XReg xn, XReg xm, AddSubShift shift = AddSubShift::LSL, Imm<6
 {
     emit<"10101011ss0mmmmmiiiiiinnnnnddddd", "d", "n", "m", "s", "i">(xd, xn, xm, shift, shift_amount);
 }
-void ADR(XReg xd, AddrOffset<21, 0> label)
+void ADR(XReg xd, PageOffset<21, 0> label)
 {
     emit<"0ii10000iiiiiiiiiiiiiiiiiiiddddd", "d", "i">(xd, label);
 }
-void ADRP(XReg xd, PageOffset<21> label)
+void ADRP(XReg xd, PageOffset<21, 12> label)
 {
     emit<"1ii10000iiiiiiiiiiiiiiiiiiiddddd", "d", "i">(xd, label);
 }
