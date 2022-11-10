@@ -29,7 +29,7 @@ jobs:
           -B ${{github.workspace}}/build
           -H.
           -GNinja
-          -DDYNARMIC_USE_BUNDLED_CATCH=ON
+          -DOAKNUT_USE_BUNDLED_CATCH=ON
 
       - name: Build
         working-directory: ${{github.workspace}}/build

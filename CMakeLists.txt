@@ -41,7 +41,8 @@ target_compile_features(oaknut INTERFACE cxx_std_20)
 
 # Tests
 if (MASTER_PROJECT)
-    if (DYNARMIC_USE_BUNDLED_CATCH)
+    option(OAKNUT_USE_BUNDLED_CATCH "Use the embedded Catch2 submodule" OFF)
+    if (OAKNUT_USE_BUNDLED_CATCH)
         add_subdirectory(externals/catch)
     else()
         find_package(Catch2 3 REQUIRED)
