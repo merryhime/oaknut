@@ -54,5 +54,33 @@ if (MASTER_PROJECT)
     )
     target_include_directories(oaknut-tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests)
     target_link_libraries(oaknut-tests PRIVATE Catch2::Catch2WithMain merry::oaknut)
-    target_compile_options(oaknut-tests PRIVATE -Wall -Wextra -Wcast-qual -pedantic -pedantic-errors -Wfatal-errors -Wno-missing-braces)
+    if (MSVC)
+        target_compile_options(oaknut-tests PRIVATE
+            /experimental:external
+            /external:W0
+            /external:anglebrackets
+            /W4
+            /w44263 # Non-virtual member function hides base class virtual function
+            /w44265 # Class has virtual functions, but destructor is not virtual
+            /w44456 # Declaration of 'var' hides previous local declaration
+            /w44457 # Declaration of 'var' hides function parameter
+            /w44458 # Declaration of 'var' hides class member
+            /w44459 # Declaration of 'var' hides global definition
+            /w44946 # Reinterpret-cast between related types
+            /wd4592 # Symbol will be dynamically initialized (implementation limitation)
+            /permissive- # Stricter C++ standards conformance
+            /MP
+            /Zi
+            /Zo
+            /EHsc
+            /Zc:externConstexpr # Allows external linkage for variables declared "extern constexpr", as the standard permits.
+            /Zc:inline          # Omits inline functions from object-file output.
+            /Zc:throwingNew     # Assumes new (without std::nothrow) never returns null.
+            /volatile:iso       # Use strict standard-abiding volatile semantics
+            /bigobj             # Increase number of sections in .obj files
+            /DNOMINMAX
+        )
+    else()
+        target_compile_options(oaknut-tests PRIVATE -Wall -Wextra -Wcast-qual -pedantic -pedantic-errors -Wfatal-errors -Wno-missing-braces)
+    endif()
 endif()
