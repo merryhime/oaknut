@@ -4038,11 +4038,11 @@ void MOV(DReg rd, DElem en)
 }
 void MOV(WReg wd, SElem en)
 {
-    emit<"00001110000ii100001111nnnnnddddd", "d", "n", "x">(wd, en.reg_index(), en.elem_index());
+    emit<"00001110000xx100001111nnnnnddddd", "d", "n", "x">(wd, en.reg_index(), en.elem_index());
 }
 void MOV(XReg xd, DElem en)
 {
-    emit<"01001110000i1000001111nnnnnddddd", "d", "n", "x">(xd, en.reg_index(), en.elem_index());
+    emit<"01001110000x1000001111nnnnnddddd", "d", "n", "x">(xd, en.reg_index(), en.elem_index());
 }
 void MOV(VReg_8B rd, VReg_8B rn)
 {
