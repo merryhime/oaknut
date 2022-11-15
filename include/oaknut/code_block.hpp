@@ -9,6 +9,7 @@
 #include <new>
 
 #if defined(_WIN32)
+#    define NOMINMAX
 #    include <windows.h>
 #elif defined(__APPLE__)
 #    include <libkern/OSCacheControl.h>
@@ -78,6 +79,8 @@ public:
     {
 #if defined(__APPLE__)
         sys_icache_invalidate(mem, size);
+#elif defined(_WIN32)
+        FlushInstructionCache(GetCurrentProcess(), mem, size);
 #else
         static std::size_t icache_line_size = 0x10000, dcache_line_size = 0x10000;
 
