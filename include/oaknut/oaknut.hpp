@@ -242,7 +242,7 @@ private:
                                   label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
                                   return 0u;
                               },
-                              [&](void* p) {
+                              [&](const void* p) {
                                   return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
                               },
                           },
