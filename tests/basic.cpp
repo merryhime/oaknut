@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <cstdio>
+#include <limits>
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -157,5 +158,50 @@ TEST_CASE("ADRP")
 
         INFO(i);
         REQUIRE(f() == expect);
+    }
+}
+
+TEST_CASE("ADRL")
+{
+    CodeBlock mem{4096};
+
+    for (int i = 0; i < 0x200000; i++) {
+        const std::int64_t diff = RandInt<std::int64_t>(-4294967296, 4294967295);
+        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + diff;
+
+        CodeGenerator code{mem.ptr()};
+
+        auto f = code.ptr<std::uint64_t (*)()>();
+        mem.unprotect();
+        code.ADRL(X0, reinterpret_cast<void*>(value));
+        code.RET();
+        mem.protect();
+        mem.invalidate_all();
+
+        INFO(i);
+        REQUIRE(f() == static_cast<std::uint64_t>(value));
+    }
+}
+
+TEST_CASE("MOVP2R")
+{
+    CodeBlock mem{4096};
+
+    for (int i = 0; i < 0x200'0000; i++) 
+    {
+        const std::int64_t diff = RandInt<std::int64_t>(std::numeric_limits<std::int64_t>::min(), 
+                                                        std::numeric_limits<std::int64_t>::max());
+        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + diff;
+
+        CodeGenerator code{mem.ptr()};
+
+        auto f = code.ptr<std::uint64_t (*)()>();
+        mem.unprotect();
+        code.MOVP2R(X0, reinterpret_cast<void*>(value));
+        code.RET();
+        mem.protect();
+        mem.invalidate_all();
+
+        REQUIRE(f() == static_cast<std::uint64_t>(value));
     }
 }
