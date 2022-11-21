@@ -18,7 +18,11 @@ jobs:
           qemu-user
 
       - name: Checkout Catch2 v3 repo
-        run: git clone https://github.com/catchorg/Catch2.git externals/catch
+        uses: actions/checkout@v3
+        with:
+          repository: catchorg/Catch2
+          ref: v3.2.0
+          path: externals/catch
 
       - name: Configure CMake
         env:
