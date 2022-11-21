@@ -110,6 +110,12 @@ public:
         return RET(XReg{30});
     }
 
+    void ADRL(XReg xd, const void* addr)
+    {
+        ADRP(xd, addr);
+        ADD(xd, xd, reinterpret_cast<uint64_t>(addr) & 0xFFF);
+    }
+
     void MOV(WReg wd, uint32_t imm)
     {
         if (wd.index() == 31)
@@ -160,6 +166,18 @@ public:
             }
             imm >>= 16;
             shift_count++;
+        }
+    }
+
+    // Convenience function for moving pointers to registers 
+    void MOVP2R(XReg xd, const void* addr) {
+        int64_t diff = reinterpret_cast<uint64_t>(addr) - Policy::current_address();
+        if (diff >= -0xF'FFFF && diff <= 0xF'FFFF) {
+            ADR(xd, addr);
+        } else if (diff >= -int64_t{0xFFFF'FFFF} && diff <= int64_t{0xFFFF'FFFF}) {
+            ADRL(xd, addr);
+        } else {
+            MOV(xd, reinterpret_cast<uint64_t>(addr));
         }
     }
 
@@ -242,7 +260,7 @@ private:
                                   label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
                                   return 0u;
                               },
-                              [&](void* p) {
+                              [&](const void* p) {
                                   return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
                               },
                           },

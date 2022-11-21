@@ -66,7 +66,7 @@ private:
 
 template<std::size_t bitsize, std::size_t shift_amount>
 struct PageOffset {
-    PageOffset(void* ptr)
+    PageOffset(const void* ptr)
         : m_payload(ptr)
     {}
 
@@ -86,7 +86,7 @@ struct PageOffset {
 private:
     template<typename Policy>
     friend class BasicCodeGenerator;
-    std::variant<Label*, void*> m_payload;
+    std::variant<Label*, const void*> m_payload;
 };
 
 template<std::size_t bitsize, std::size_t alignment>
