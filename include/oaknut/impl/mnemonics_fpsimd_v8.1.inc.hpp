@@ -4,7 +4,7 @@
 void SQRDMLAH(HReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0111111101LMmmmm1101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMLAH(SReg rd, SReg rn, SElem em)
@@ -14,13 +14,13 @@ void SQRDMLAH(SReg rd, SReg rn, SElem em)
 void SQRDMLAH(VReg_4H rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111101LMmmmm1101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMLAH(VReg_8H rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111101LMmmmm1101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMLAH(VReg_2S rd, VReg_2S rn, SElem em)
@@ -58,7 +58,7 @@ void SQRDMLAH(VReg_4S rd, VReg_4S rn, VReg_4S rm)
 void SQRDMLSH(HReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0111111101LMmmmm1111H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMLSH(SReg rd, SReg rn, SElem em)
@@ -68,13 +68,13 @@ void SQRDMLSH(SReg rd, SReg rn, SElem em)
 void SQRDMLSH(VReg_4H rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111101LMmmmm1111H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMLSH(VReg_8H rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111101LMmmmm1111H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMLSH(VReg_2S rd, VReg_2S rn, SElem em)

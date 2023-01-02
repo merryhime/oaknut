@@ -2484,49 +2484,49 @@ void LD1(List<VReg_2D, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
 void LD1(List<VReg_8B, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm011100nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_16B, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm011100nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_4H, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm011101nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_8H, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm011101nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_2S, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm011110nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_4S, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm011110nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_1D, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm011111nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_2D, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm011111nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_8B, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
@@ -2564,49 +2564,49 @@ void LD1(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
 void LD1(List<VReg_8B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm101000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_16B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm101000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_4H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm101001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_8H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm101001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_2S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm101010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_4S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm101010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_1D, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm101011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm101011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_8B, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<24>)
@@ -2644,49 +2644,49 @@ void LD1(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<48>)
 void LD1(List<VReg_8B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm011000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_16B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm011000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_4H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm011001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_8H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm011001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_2S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm011010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_4S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm011010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_1D, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm011011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm011011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_8B, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
@@ -2724,49 +2724,49 @@ void LD1(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<64>)
 void LD1(List<VReg_8B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm001000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_16B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm001000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_4H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm001001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_8H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm001001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_2S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm001010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_4S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm001010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_1D, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm001011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm001011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1(List<BElem, 1> tlist, XRegSp addr_n)
@@ -2792,7 +2792,7 @@ void LD1(List<BElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<1>)
 void LD1(List<BElem, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101110mmmmm000Szznnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD1(List<HElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<2>)
@@ -2802,7 +2802,7 @@ void LD1(List<HElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<2>)
 void LD1(List<HElem, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101110mmmmm010Sz0nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD1(List<SElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
@@ -2812,7 +2812,7 @@ void LD1(List<SElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
 void LD1(List<SElem, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101110mmmmm100S00nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD1(List<DElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
@@ -2822,7 +2822,7 @@ void LD1(List<DElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
 void LD1(List<DElem, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101110mmmmm100001nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD1R(List<VReg_8B, 1> tlist, XRegSp addr_n)
@@ -2892,49 +2892,49 @@ void LD1R(List<VReg_2D, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
 void LD1R(List<VReg_8B, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101110mmmmm110000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1R(List<VReg_16B, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101110mmmmm110000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1R(List<VReg_4H, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101110mmmmm110001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1R(List<VReg_8H, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101110mmmmm110001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1R(List<VReg_2S, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101110mmmmm110010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1R(List<VReg_4S, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101110mmmmm110010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1R(List<VReg_1D, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101110mmmmm110011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD1R(List<VReg_2D, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101110mmmmm110011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2(List<VReg_8B, 2> tlist, XRegSp addr_n)
@@ -2996,43 +2996,43 @@ void LD2(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
 void LD2(List<VReg_8B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm100000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2(List<VReg_16B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm100000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2(List<VReg_4H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm100001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2(List<VReg_8H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm100001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2(List<VReg_2S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm100010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2(List<VReg_4S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm100010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm100011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2(List<BElem, 2> tlist, XRegSp addr_n)
@@ -3058,7 +3058,7 @@ void LD2(List<BElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<2>)
 void LD2(List<BElem, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101111mmmmm000Szznnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD2(List<HElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
@@ -3068,7 +3068,7 @@ void LD2(List<HElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
 void LD2(List<HElem, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101111mmmmm010Sz0nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD2(List<SElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
@@ -3078,7 +3078,7 @@ void LD2(List<SElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
 void LD2(List<SElem, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101111mmmmm100S00nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD2(List<DElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
@@ -3088,7 +3088,7 @@ void LD2(List<DElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
 void LD2(List<DElem, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101111mmmmm100001nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD2R(List<VReg_8B, 2> tlist, XRegSp addr_n)
@@ -3158,49 +3158,49 @@ void LD2R(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
 void LD2R(List<VReg_8B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101111mmmmm110000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2R(List<VReg_16B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101111mmmmm110000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2R(List<VReg_4H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101111mmmmm110001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2R(List<VReg_8H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101111mmmmm110001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2R(List<VReg_2S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101111mmmmm110010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2R(List<VReg_4S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101111mmmmm110010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2R(List<VReg_1D, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101111mmmmm110011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD2R(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101111mmmmm110011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3(List<VReg_8B, 3> tlist, XRegSp addr_n)
@@ -3262,43 +3262,43 @@ void LD3(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<48>)
 void LD3(List<VReg_8B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm010000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3(List<VReg_16B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm010000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3(List<VReg_4H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm010001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3(List<VReg_8H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm010001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3(List<VReg_2S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm010010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3(List<VReg_4S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm010010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm010011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3(List<BElem, 3> tlist, XRegSp addr_n)
@@ -3324,7 +3324,7 @@ void LD3(List<BElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<3>)
 void LD3(List<BElem, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101110mmmmm001Szznnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD3(List<HElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<6>)
@@ -3334,7 +3334,7 @@ void LD3(List<HElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<6>)
 void LD3(List<HElem, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101110mmmmm011Sz0nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD3(List<SElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<12>)
@@ -3344,7 +3344,7 @@ void LD3(List<SElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<12>)
 void LD3(List<SElem, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101110mmmmm101S00nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD3(List<DElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<24>)
@@ -3354,7 +3354,7 @@ void LD3(List<DElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<24>)
 void LD3(List<DElem, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101110mmmmm101001nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD3R(List<VReg_8B, 3> tlist, XRegSp addr_n)
@@ -3424,49 +3424,49 @@ void LD3R(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<24>)
 void LD3R(List<VReg_8B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101110mmmmm111000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3R(List<VReg_16B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101110mmmmm111000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3R(List<VReg_4H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101110mmmmm111001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3R(List<VReg_8H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101110mmmmm111001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3R(List<VReg_2S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101110mmmmm111010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3R(List<VReg_4S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101110mmmmm111010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3R(List<VReg_1D, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101110mmmmm111011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD3R(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101110mmmmm111011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4(List<VReg_8B, 4> tlist, XRegSp addr_n)
@@ -3528,43 +3528,43 @@ void LD4(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<64>)
 void LD4(List<VReg_8B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm000000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4(List<VReg_16B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm000000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4(List<VReg_4H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm000001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4(List<VReg_8H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm000001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4(List<VReg_2S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100110mmmmm000010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4(List<VReg_4S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm000010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100110mmmmm000011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4(List<BElem, 4> tlist, XRegSp addr_n)
@@ -3590,7 +3590,7 @@ void LD4(List<BElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
 void LD4(List<BElem, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101111mmmmm001Szznnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD4(List<HElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
@@ -3600,7 +3600,7 @@ void LD4(List<HElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
 void LD4(List<HElem, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101111mmmmm011Sz0nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD4(List<SElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
@@ -3610,7 +3610,7 @@ void LD4(List<SElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
 void LD4(List<SElem, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101111mmmmm101S00nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD4(List<DElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
@@ -3620,7 +3620,7 @@ void LD4(List<DElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
 void LD4(List<DElem, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101111mmmmm101001nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void LD4R(List<VReg_8B, 4> tlist, XRegSp addr_n)
@@ -3690,49 +3690,49 @@ void LD4R(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
 void LD4R(List<VReg_8B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101111mmmmm111000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4R(List<VReg_16B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101111mmmmm111000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4R(List<VReg_4H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101111mmmmm111001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4R(List<VReg_8H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101111mmmmm111001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4R(List<VReg_2S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101111mmmmm111010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4R(List<VReg_4S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101111mmmmm111010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4R(List<VReg_1D, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001101111mmmmm111011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LD4R(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001101111mmmmm111011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void LDNP(SReg rt1, SReg rt2, XRegSp addr_n, SOffset<9, 2> offset = 0)
@@ -3903,13 +3903,13 @@ void LDUR(QReg rt, XRegSp addr_n, SOffset<9, 0> offset = 0)
 void MLA(VReg_4H rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111101LMmmmm0000H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void MLA(VReg_8H rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111101LMmmmm0000H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void MLA(VReg_2S rd, VReg_2S rn, SElem em)
@@ -3947,13 +3947,13 @@ void MLA(VReg_4S rd, VReg_4S rn, VReg_4S rm)
 void MLS(VReg_4H rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111101LMmmmm0100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void MLS(VReg_8H rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111101LMmmmm0100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void MLS(VReg_2S rd, VReg_2S rn, SElem em)
@@ -4095,13 +4095,13 @@ void MOVI(VReg_2D rd, RepImm imm)
 void MUL(VReg_4H rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm1000H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void MUL(VReg_8H rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm1000H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void MUL(VReg_2S rd, VReg_2S rn, SElem em)
@@ -5027,13 +5027,13 @@ void SMINV(SReg rd, VReg_4S rn)
 void SMLAL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm0010H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SMLAL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm0010H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SMLAL(VReg_2D rd, VReg_2S rn, SElem em)
@@ -5071,13 +5071,13 @@ void SMLAL2(VReg_2D rd, VReg_4S rn, VReg_4S rm)
 void SMLSL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm0110H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SMLSL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm0110H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SMLSL(VReg_2D rd, VReg_2S rn, SElem em)
@@ -5135,13 +5135,13 @@ void SMOV(XReg xd, SElem en)
 void SMULL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm1010H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SMULL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm1010H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SMULL(VReg_2D rd, VReg_2S rn, SElem em)
@@ -5267,7 +5267,7 @@ void SQADD(VReg_2D rd, VReg_2D rn, VReg_2D rm)
 void SQDMLAL(SReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0101111101LMmmmm0011H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMLAL(DReg rd, SReg rn, SElem em)
@@ -5277,13 +5277,13 @@ void SQDMLAL(DReg rd, SReg rn, SElem em)
 void SQDMLAL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm0011H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMLAL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm0011H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMLAL(VReg_2D rd, VReg_2S rn, SElem em)
@@ -5321,7 +5321,7 @@ void SQDMLAL2(VReg_2D rd, VReg_4S rn, VReg_4S rm)
 void SQDMLSL(SReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0101111101LMmmmm0111H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMLSL(DReg rd, SReg rn, SElem em)
@@ -5331,13 +5331,13 @@ void SQDMLSL(DReg rd, SReg rn, SElem em)
 void SQDMLSL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm0111H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMLSL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm0111H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMLSL(VReg_2D rd, VReg_2S rn, SElem em)
@@ -5375,7 +5375,7 @@ void SQDMLSL2(VReg_2D rd, VReg_4S rn, VReg_4S rm)
 void SQDMULH(HReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0101111101LMmmmm1100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMULH(SReg rd, SReg rn, SElem em)
@@ -5385,13 +5385,13 @@ void SQDMULH(SReg rd, SReg rn, SElem em)
 void SQDMULH(VReg_4H rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm1100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMULH(VReg_8H rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm1100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMULH(VReg_2S rd, VReg_2S rn, SElem em)
@@ -5429,7 +5429,7 @@ void SQDMULH(VReg_4S rd, VReg_4S rn, VReg_4S rm)
 void SQDMULL(SReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0101111101LMmmmm1011H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMULL(DReg rd, SReg rn, SElem em)
@@ -5439,13 +5439,13 @@ void SQDMULL(DReg rd, SReg rn, SElem em)
 void SQDMULL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm1011H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMULL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm1011H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQDMULL(VReg_2D rd, VReg_2S rn, SElem em)
@@ -5527,7 +5527,7 @@ void SQNEG(VReg_2D rd, VReg_2D rn)
 void SQRDMULH(HReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0101111101LMmmmm1101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMULH(SReg rd, SReg rn, SElem em)
@@ -5537,13 +5537,13 @@ void SQRDMULH(SReg rd, SReg rn, SElem em)
 void SQRDMULH(VReg_4H rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111101LMmmmm1101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMULH(VReg_8H rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111101LMmmmm1101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void SQRDMULH(VReg_2S rd, VReg_2S rn, SElem em)
@@ -6497,49 +6497,49 @@ void ST1(List<VReg_2D, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
 void ST1(List<VReg_8B, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm011100nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_16B, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm011100nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_4H, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm011101nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_8H, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm011101nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_2S, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm011110nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_4S, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm011110nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_1D, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm011111nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_2D, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm011111nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_8B, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
@@ -6577,49 +6577,49 @@ void ST1(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
 void ST1(List<VReg_8B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm101000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_16B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm101000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_4H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm101001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_8H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm101001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_2S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm101010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_4S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm101010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_1D, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm101011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm101011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_8B, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<24>)
@@ -6657,49 +6657,49 @@ void ST1(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<48>)
 void ST1(List<VReg_8B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm011000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_16B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm011000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_4H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm011001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_8H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm011001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_2S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm011010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_4S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm011010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_1D, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm011011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm011011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_8B, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
@@ -6737,49 +6737,49 @@ void ST1(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<64>)
 void ST1(List<VReg_8B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm001000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_16B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm001000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_4H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm001001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_8H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm001001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_2S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm001010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_4S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm001010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_1D, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm001011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm001011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST1(List<BElem, 1> tlist, XRegSp addr_n)
@@ -6805,7 +6805,7 @@ void ST1(List<BElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<1>)
 void ST1(List<BElem, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101100mmmmm000Szznnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST1(List<HElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<2>)
@@ -6815,7 +6815,7 @@ void ST1(List<HElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<2>)
 void ST1(List<HElem, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101100mmmmm010Sz0nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST1(List<SElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
@@ -6825,7 +6825,7 @@ void ST1(List<SElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
 void ST1(List<SElem, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101100mmmmm100S00nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST1(List<DElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
@@ -6835,7 +6835,7 @@ void ST1(List<DElem, 1> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
 void ST1(List<DElem, 1> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101100mmmmm100001nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST2(List<VReg_8B, 2> tlist, XRegSp addr_n)
@@ -6897,43 +6897,43 @@ void ST2(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
 void ST2(List<VReg_8B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm100000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST2(List<VReg_16B, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm100000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST2(List<VReg_4H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm100001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST2(List<VReg_8H, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm100001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST2(List<VReg_2S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm100010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST2(List<VReg_4S, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm100010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST2(List<VReg_2D, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm100011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST2(List<BElem, 2> tlist, XRegSp addr_n)
@@ -6959,7 +6959,7 @@ void ST2(List<BElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<2>)
 void ST2(List<BElem, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101101mmmmm000Szznnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST2(List<HElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
@@ -6969,7 +6969,7 @@ void ST2(List<HElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
 void ST2(List<HElem, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101101mmmmm010Sz0nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST2(List<SElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
@@ -6979,7 +6979,7 @@ void ST2(List<SElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
 void ST2(List<SElem, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101101mmmmm100S00nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST2(List<DElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
@@ -6989,7 +6989,7 @@ void ST2(List<DElem, 2> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
 void ST2(List<DElem, 2> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101101mmmmm100001nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST3(List<VReg_8B, 3> tlist, XRegSp addr_n)
@@ -7051,43 +7051,43 @@ void ST3(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<48>)
 void ST3(List<VReg_8B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm010000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST3(List<VReg_16B, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm010000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST3(List<VReg_4H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm010001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST3(List<VReg_8H, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm010001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST3(List<VReg_2S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm010010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST3(List<VReg_4S, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm010010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST3(List<VReg_2D, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm010011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST3(List<BElem, 3> tlist, XRegSp addr_n)
@@ -7113,7 +7113,7 @@ void ST3(List<BElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<3>)
 void ST3(List<BElem, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101100mmmmm001Szznnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST3(List<HElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<6>)
@@ -7123,7 +7123,7 @@ void ST3(List<HElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<6>)
 void ST3(List<HElem, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101100mmmmm011Sz0nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST3(List<SElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<12>)
@@ -7133,7 +7133,7 @@ void ST3(List<SElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<12>)
 void ST3(List<SElem, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101100mmmmm101S00nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST3(List<DElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<24>)
@@ -7143,7 +7143,7 @@ void ST3(List<DElem, 3> tlist, XRegSp addr_n, PostIndexed, ImmConst<24>)
 void ST3(List<DElem, 3> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101100mmmmm101001nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST4(List<VReg_8B, 4> tlist, XRegSp addr_n)
@@ -7205,43 +7205,43 @@ void ST4(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<64>)
 void ST4(List<VReg_8B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm000000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST4(List<VReg_16B, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm000000nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST4(List<VReg_4H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm000001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST4(List<VReg_8H, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm000001nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST4(List<VReg_2S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"00001100100mmmmm000010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST4(List<VReg_4S, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm000010nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST4(List<VReg_2D, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"01001100100mmmmm000011nnnnnttttt", "t", "n", "m">(tlist, addr_n, xm);
 }
 void ST4(List<BElem, 4> tlist, XRegSp addr_n)
@@ -7267,7 +7267,7 @@ void ST4(List<BElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<4>)
 void ST4(List<BElem, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101101mmmmm001Szznnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST4(List<HElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
@@ -7277,7 +7277,7 @@ void ST4(List<HElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<8>)
 void ST4(List<HElem, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101101mmmmm011Sz0nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST4(List<SElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
@@ -7287,7 +7287,7 @@ void ST4(List<SElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<16>)
 void ST4(List<SElem, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101101mmmmm101S00nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void ST4(List<DElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
@@ -7297,7 +7297,7 @@ void ST4(List<DElem, 4> tlist, XRegSp addr_n, PostIndexed, ImmConst<32>)
 void ST4(List<DElem, 4> tlist, XRegSp addr_n, PostIndexed, XReg xm)
 {
     if (xm.index() == 31)
-        throw "xzr invalid here";
+        throw OaknutException{ExceptionType::InvalidOperandXZR};
     emit<"0Q001101101mmmmm101001nnnnnttttt", "t", "QSz", "n", "m">(tlist.m_base.reg_index(), tlist.m_base.elem_index(), addr_n, xm);
 }
 void STNP(SReg rt1, SReg rt2, XRegSp addr_n, SOffset<9, 2> offset = 0)
@@ -8180,13 +8180,13 @@ void UMINV(SReg rd, VReg_4S rn)
 void UMLAL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111101LMmmmm0010H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void UMLAL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111101LMmmmm0010H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void UMLAL(VReg_2D rd, VReg_2S rn, SElem em)
@@ -8224,13 +8224,13 @@ void UMLAL2(VReg_2D rd, VReg_4S rn, VReg_4S rm)
 void UMLSL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111101LMmmmm0110H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void UMLSL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111101LMmmmm0110H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void UMLSL(VReg_2D rd, VReg_2S rn, SElem em)
@@ -8284,13 +8284,13 @@ void UMOV(XReg xd, DElem en)
 void UMULL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111101LMmmmm1010H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void UMULL2(VReg_4S rd, VReg_8H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111101LMmmmm1010H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void UMULL(VReg_2D rd, VReg_2S rn, SElem em)

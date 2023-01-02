@@ -55,7 +55,7 @@ std::uint32_t encode(MovImm16 v)
     if constexpr (std::popcount(splat) == 17) {
         constexpr std::uint32_t mask = (1 << std::popcount(splat)) - 1;
         if ((v.m_encoded & mask) != v.m_encoded)
-            throw "invalid MovImm16";
+            throw OaknutException{ExceptionType::InvalidMovImm16};
     }
     return pdep<splat>(v.m_encoded);
 }
@@ -136,7 +136,7 @@ void addsubext_verify_reg_size(AddSubExt ext, RReg rm)
         return;
     if (rm.bitsize() == 64 && (static_cast<int>(ext) & 0b011) == 0b011)
         return;
-    throw "invalid AddSubExt choice for rm size";
+    throw OaknutException{ExceptionType::InvalidAddSubExt};
 }
 
 void indexext_verify_reg_size(IndexExt ext, RReg rm)
@@ -145,11 +145,11 @@ void indexext_verify_reg_size(IndexExt ext, RReg rm)
         return;
     if (rm.bitsize() == 64 && (static_cast<int>(ext) & 1) == 1)
         return;
-    throw "invalid IndexExt choice for rm size";
+    throw OaknutException{ExceptionType::InvalidIndexExt};
 }
 
 void tbz_verify_reg_size(RReg rt, Imm<6> imm)
 {
     if (rt.bitsize() == 32 && imm.value() >= 32)
-        throw "invalid imm choice for rt size";
+        throw OaknutException{ExceptionType::BitPositionOutOfRange};
 }

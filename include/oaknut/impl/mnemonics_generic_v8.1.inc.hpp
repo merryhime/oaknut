@@ -68,97 +68,97 @@ void CASLH(WReg ws, WReg wt, XRegSp xn)
 void CASP(WReg ws, WReg ws2, WReg wt, WReg wt2, XRegSp xn)
 {
     if (wt.index() + 1 != wt2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (wt.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     if (ws.index() + 1 != ws2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (ws.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     emit<"00001000001sssss011111nnnnnttttt", "s", "t", "n">(ws, wt, xn);
 }
 void CASPA(WReg ws, WReg ws2, WReg wt, WReg wt2, XRegSp xn)
 {
     if (wt.index() + 1 != wt2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (wt.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     if (ws.index() + 1 != ws2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (ws.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     emit<"00001000011sssss011111nnnnnttttt", "s", "t", "n">(ws, wt, xn);
 }
 void CASPAL(WReg ws, WReg ws2, WReg wt, WReg wt2, XRegSp xn)
 {
     if (wt.index() + 1 != wt2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (wt.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     if (ws.index() + 1 != ws2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (ws.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     emit<"00001000011sssss111111nnnnnttttt", "s", "t", "n">(ws, wt, xn);
 }
 void CASPL(WReg ws, WReg ws2, WReg wt, WReg wt2, XRegSp xn)
 {
     if (wt.index() + 1 != wt2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (wt.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     if (ws.index() + 1 != ws2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (ws.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     emit<"00001000001sssss111111nnnnnttttt", "s", "t", "n">(ws, wt, xn);
 }
 void CASP(XReg xs, XReg xs2, XReg xt, XReg xt2, XRegSp xn)
 {
     if (xt.index() + 1 != xt2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (xt.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     if (xs.index() + 1 != xs2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (xs.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     emit<"01001000001sssss011111nnnnnttttt", "s", "t", "n">(xs, xt, xn);
 }
 void CASPA(XReg xs, XReg xs2, XReg xt, XReg xt2, XRegSp xn)
 {
     if (xt.index() + 1 != xt2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (xt.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     if (xs.index() + 1 != xs2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (xs.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     emit<"01001000011sssss011111nnnnnttttt", "s", "t", "n">(xs, xt, xn);
 }
 void CASPAL(XReg xs, XReg xs2, XReg xt, XReg xt2, XRegSp xn)
 {
     if (xt.index() + 1 != xt2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (xt.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     if (xs.index() + 1 != xs2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (xs.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     emit<"01001000011sssss111111nnnnnttttt", "s", "t", "n">(xs, xt, xn);
 }
 void CASPL(XReg xs, XReg xs2, XReg xt, XReg xt2, XRegSp xn)
 {
     if (xt.index() + 1 != xt2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (xt.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     if (xs.index() + 1 != xs2.index())
-        throw "Invalid second register in pair";
+        throw OaknutException{ExceptionType::InvalidPairSecond};
     if (xs.index() & 1)
-        throw "Requires even register";
+        throw OaknutException{ExceptionType::InvalidPairFirst};
     emit<"01001000001sssss111111nnnnnttttt", "s", "t", "n">(xs, xt, xn);
 }
 void LDADD(WReg ws, WReg wt, XRegSp xn)

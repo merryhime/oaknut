@@ -166,13 +166,13 @@ void B(Cond cond, AddrOffset<21, 2> label)
 void BFI(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"0011001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
 }
 void BFI(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"1011001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
 }
 void BFM(WReg wd, WReg wn, Imm<5> immr, Imm<5> imms)
@@ -186,13 +186,13 @@ void BFM(XReg xd, XReg xn, Imm<6> immr, Imm<6> imms)
 void BFXIL(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"0011001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void BFXIL(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"1011001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void BIC(WReg wd, WReg wn, WReg wm, LogShift shift = LogShift::LSL, Imm<5> shift_amount = 0)
@@ -278,25 +278,25 @@ void CCMP(XReg xn, XReg xm, Imm<4> nzcv, Cond cond)
 void CINC(WReg wd, WReg wn, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"00011010100mmmmmcccc01nnnnnddddd", "d", "n", "m", "c">(wd, wn, wn, invert(cond));
 }
 void CINC(XReg xd, XReg xn, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"10011010100mmmmmcccc01nnnnnddddd", "d", "n", "m", "c">(xd, xn, xn, invert(cond));
 }
 void CINV(WReg wd, WReg wn, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"01011010100mmmmmcccc00nnnnnddddd", "d", "n", "m", "c">(wd, wn, wn, invert(cond));
 }
 void CINV(XReg xd, XReg xn, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"11011010100mmmmmcccc00nnnnnddddd", "d", "n", "m", "c">(xd, xn, xn, invert(cond));
 }
 void CLREX(Imm<4> imm = 15)
@@ -392,13 +392,13 @@ void CMP(XReg xn, XReg xm, AddSubShift shift = AddSubShift::LSL, Imm<6> shift_am
 void CNEG(WReg wd, WReg wn, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"01011010100mmmmmcccc01nnnnnddddd", "d", "n", "m", "c">(wd, wn, wn, invert(cond));
 }
 void CNEG(XReg xd, XReg xn, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"11011010100mmmmmcccc01nnnnnddddd", "d", "n", "m", "c">(xd, xn, xn, invert(cond));
 }
 void CRC32B(WReg wd, WReg wn, WReg wm)
@@ -448,25 +448,25 @@ void CSEL(XReg xd, XReg xn, XReg xm, Cond cond)
 void CSET(WReg wd, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"0001101010011111cccc0111111ddddd", "d", "c">(wd, invert(cond));
 }
 void CSET(XReg xd, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"1001101010011111cccc0111111ddddd", "d", "c">(xd, invert(cond));
 }
 void CSETM(WReg wd, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"0101101010011111cccc0011111ddddd", "d", "c">(wd, invert(cond));
 }
 void CSETM(XReg xd, Cond cond)
 {
     if (cond == Cond::AL || cond == Cond::NV)
-        throw "invalid Cond";
+        throw OaknutException{ExceptionType::InvalidCond};
     emit<"1101101010011111cccc0011111ddddd", "d", "c">(xd, invert(cond));
 }
 void CSINC(WReg wd, WReg wn, WReg wm, Cond cond)
@@ -1230,13 +1230,13 @@ void SBCS(XReg xd, XReg xn, XReg xm)
 void SBFIZ(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"0001001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
 }
 void SBFIZ(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"1001001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
 }
 void SBFM(WReg wd, WReg wn, Imm<5> immr, Imm<5> imms)
@@ -1250,13 +1250,13 @@ void SBFM(XReg xd, XReg xn, Imm<6> immr, Imm<6> imms)
 void SBFX(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"0001001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void SBFX(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"1001001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void SDIV(WReg wd, WReg wn, WReg wm)
@@ -1626,13 +1626,13 @@ void TST(XReg xn, XReg xm, LogShift shift = LogShift::LSL, Imm<6> shift_amount =
 void UBFIZ(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"0101001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
 }
 void UBFIZ(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"1101001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
 }
 void UBFM(WReg wd, WReg wn, Imm<5> immr, Imm<5> imms)
@@ -1646,13 +1646,13 @@ void UBFM(XReg xd, XReg xn, Imm<6> immr, Imm<6> imms)
 void UBFX(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"0101001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void UBFX(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
-        throw "invalid width";
+        throw OaknutException{ExceptionType::InvalidBitWidth};
     emit<"1101001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, lsb.value(), lsb.value() + width.value() - 1);
 }
 void UDF(Imm<16> imm)

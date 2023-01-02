@@ -412,19 +412,19 @@ void FMINV(HReg rd, VReg_8H rn)
 void FMLA(HReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0101111100LMmmmm0001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLA(VReg_8B rd, VReg_8B rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111100LMmmmm0001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLA(VReg_16B rd, VReg_16B rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111100LMmmmm0001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLA(VReg_4H rd, VReg_4H rn, VReg_4H rm)
@@ -438,25 +438,25 @@ void FMLA(VReg_8H rd, VReg_8H rn, VReg_8H rm)
 void FMLAL(VReg_2S rd, VReg_2H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111110LMmmmm0000H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLAL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111110LMmmmm0000H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLAL2(VReg_2S rd, VReg_2H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111110LMmmmm1000H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLAL2(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111110LMmmmm1000H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLAL(VReg_2S rd, VReg_2H rn, VReg_2H rm)
@@ -478,19 +478,19 @@ void FMLAL2(VReg_4S rd, VReg_4H rn, VReg_4H rm)
 void FMLS(HReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0101111100LMmmmm0101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLS(VReg_8B rd, VReg_8B rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111100LMmmmm0101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLS(VReg_16B rd, VReg_16B rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111100LMmmmm0101H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLS(VReg_4H rd, VReg_4H rn, VReg_4H rm)
@@ -504,25 +504,25 @@ void FMLS(VReg_8H rd, VReg_8H rn, VReg_8H rm)
 void FMLSL(VReg_2S rd, VReg_2H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111110LMmmmm0100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLSL(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111110LMmmmm0100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLSL2(VReg_2S rd, VReg_2H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111110LMmmmm1100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLSL2(VReg_4S rd, VReg_4H rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111110LMmmmm1100H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMLSL(VReg_2S rd, VReg_2H rn, VReg_2H rm)
@@ -552,19 +552,19 @@ void FMOV(VReg_8H rd, FImm8 imm)
 void FMUL(HReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0101111100LMmmmm1001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMUL(VReg_8B rd, VReg_8B rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0000111100LMmmmm1001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMUL(VReg_16B rd, VReg_16B rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0100111100LMmmmm1001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMUL(VReg_4H rd, VReg_4H rn, VReg_4H rm)
@@ -590,19 +590,19 @@ void FMULX(VReg_8H rd, VReg_8H rn, VReg_8H rm)
 void FMULX(HReg rd, HReg rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0111111100LMmmmm1001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMULX(VReg_8B rd, VReg_8B rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0010111100LMmmmm1001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FMULX(VReg_16B rd, VReg_16B rn, HElem em)
 {
     if (em.reg_index() >= 16)
-        throw "InvalidCombination";
+        throw OaknutException{ExceptionType::InvalidCombination};
     emit<"0110111100LMmmmm1001H0nnnnnddddd", "d", "n", "m", "H", "L", "M">(rd, rn, em.reg_index(), em.elem_index() >> 2, (em.elem_index() >> 1) & 1, em.elem_index() & 1);
 }
 void FNEG(VReg_4H rd, VReg_4H rn)

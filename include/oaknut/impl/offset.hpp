@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <variant>
 
+#include "oaknut/oaknut_exception.hpp"
+
 namespace oaknut {
 
 struct Label;
@@ -51,9 +53,9 @@ struct AddrOffset {
     {
         const std::uint64_t diff_u64 = static_cast<std::uint64_t>(diff);
         if (detail::sign_extend<bitsize>(diff_u64) != diff_u64)
-            throw "out of range";
+            throw OaknutException{ExceptionType::OffsetOutOfRange};
         if (diff_u64 != (diff_u64 & detail::inverse_mask_from_size(alignment)))
-            throw "misalignment";
+            throw OaknutException{ExceptionType::OffsetMisaligned};
 
         return static_cast<std::uint32_t>((diff_u64 & detail::mask_from_size(bitsize)) >> alignment);
     }
@@ -78,7 +80,7 @@ struct PageOffset {
     {
         std::uint64_t diff = (static_cast<std::uint64_t>(target) >> shift_amount) - (static_cast<std::uint64_t>(current_addr) >> shift_amount);
         if (detail::sign_extend<bitsize>(diff) != diff)
-            throw "out of range";
+            throw OaknutException{ExceptionType::OffsetOutOfRange};
         diff &= detail::mask_from_size(bitsize);
         return static_cast<std::uint32_t>(((diff & 3) << (bitsize - 2)) | (diff >> 2));
     }
@@ -95,9 +97,9 @@ struct SOffset {
     {
         const std::uint64_t diff_u64 = static_cast<std::uint64_t>(offset);
         if (detail::sign_extend<bitsize>(diff_u64) != diff_u64)
-            throw "out of range";
+            throw OaknutException{ExceptionType::OffsetOutOfRange};
         if (diff_u64 != (diff_u64 & detail::inverse_mask_from_size(alignment)))
-            throw "misalignment";
+            throw OaknutException{ExceptionType::OffsetMisaligned};
 
         m_encoded = static_cast<std::uint32_t>((diff_u64 & detail::mask_from_size(bitsize)) >> alignment);
     }
@@ -114,9 +116,9 @@ struct POffset {
     {
         const std::uint64_t diff_u64 = static_cast<std::uint64_t>(offset);
         if (diff_u64 > detail::mask_from_size(bitsize))
-            throw "out of range";
+            throw OaknutException{ExceptionType::OffsetOutOfRange};
         if (diff_u64 != (diff_u64 & detail::inverse_mask_from_size(alignment)))
-            throw "misalignment";
+            throw OaknutException{ExceptionType::OffsetMisaligned};
 
         m_encoded = static_cast<std::uint32_t>((diff_u64 & detail::mask_from_size(bitsize)) >> alignment);
     }

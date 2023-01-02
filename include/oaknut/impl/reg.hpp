@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <cstdint>
 
+#include "oaknut/oaknut_exception.hpp"
+
 namespace oaknut {
 
 struct Reg;
@@ -117,14 +119,14 @@ struct WReg : public RReg {
 inline XReg RReg::toX() const
 {
     if (index() == -1)
-        throw "cannot convert SP/WSP to XReg";
+        throw OaknutException{ExceptionType::InvalidXSPConversion};
     return XReg{index()};
 }
 
 inline WReg RReg::toW() const
 {
     if (index() == -1)
-        throw "cannot convert SP/WSP to WReg";
+        throw OaknutException{ExceptionType::InvalidWSPConversion};
     return WReg{index()};
 }
 
@@ -146,7 +148,7 @@ struct XRegSp : public RReg {
         : RReg(64, xr.index())
     {
         if (xr.index() == 31)
-            throw "unexpected ZR passed into an XRegSp";
+            throw OaknutException{ExceptionType::InvalidXZRConversion};
     }
 
     template<typename Policy>
@@ -161,7 +163,7 @@ struct WRegWsp : public RReg {
         : RReg(32, wr.index())
     {
         if (wr.index() == 31)
-            throw "unexpected WZR passed into an WRegWsp";
+            throw OaknutException{ExceptionType::InvalidWZRConversion};
     }
 
     template<typename Policy>
@@ -296,7 +298,7 @@ struct Elem {
         : m_esize(esize_), m_reg(reg_), m_elem_index(elem_index_)
     {
         if (elem_index_ >= 128 / esize_)
-            throw "invalid elem_index";
+            throw OaknutException{ExceptionType::InvalidElementIndex};
     }
 
     constexpr unsigned esize() const { return m_esize; }
@@ -338,7 +340,7 @@ struct DElem_1 : public DElem {
         : DElem(inner)
     {
         if (inner.elem_index() != 1)
-            throw "invalid DElem_1";
+            throw OaknutException{ExceptionType::InvalidDElem_1};
     }
 };
 

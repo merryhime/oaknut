@@ -7,6 +7,8 @@
 #include <tuple>
 #include <type_traits>
 
+#include "oaknut/oaknut_exception.hpp"
+
 namespace oaknut {
 
 struct Elem;
@@ -40,7 +42,7 @@ struct List {
         static_assert(std::is_base_of_v<VRegArranged, T> || std::is_base_of_v<Elem, T> || detail::is_instance_of_ElemSelector_v<T>);
 
         if (!verify(std::index_sequence_for<U...>{}, args...))
-            throw "invalid List";
+            throw OaknutException{ExceptionType::InvalidList};
     }
 
     constexpr auto operator[](unsigned elem_index) const

@@ -19,6 +19,7 @@
 #include "oaknut/impl/offset.hpp"
 #include "oaknut/impl/reg.hpp"
 #include "oaknut/impl/string_literal.hpp"
+#include "oaknut/oaknut_exception.hpp"
 
 namespace oaknut {
 
@@ -87,7 +88,7 @@ public:
     void l(Label& label)
     {
         if (label.m_addr)
-            throw "label already resolved";
+            throw OaknutException{ExceptionType::LabelRedefinition};
 
         const auto target_addr = Policy::current_address();
         label.m_addr = target_addr;
@@ -169,8 +170,9 @@ public:
         }
     }
 
-    // Convenience function for moving pointers to registers 
-    void MOVP2R(XReg xd, const void* addr) {
+    // Convenience function for moving pointers to registers
+    void MOVP2R(XReg xd, const void* addr)
+    {
         int64_t diff = reinterpret_cast<uint64_t>(addr) - Policy::current_address();
         if (diff >= -0xF'FFFF && diff <= 0xF'FFFF) {
             ADR(xd, addr);
@@ -184,7 +186,7 @@ public:
     void align(std::size_t alignment)
     {
         if (alignment < 4 || (alignment & (alignment - 1)) != 0)
-            throw "invalid alignment";
+            throw OaknutException{ExceptionType::InvalidAlignment};
 
         while (Policy::template ptr<std::uintptr_t>() & (alignment - 1)) {
             NOP();
