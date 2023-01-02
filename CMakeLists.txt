@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(oaknut LANGUAGES CXX VERSION 1.1.4)
+project(oaknut LANGUAGES CXX VERSION 1.1.5)
 
 # Determine if we're built as a subproject (using add_subdirectory)
 # or if this is the master project.
