@@ -9,6 +9,9 @@ jobs:
       - name: Checkout oaknut repo
         uses: actions/checkout@v3
 
+      - name: Update package repositories
+        run: sudo apt-get update
+
       - name: Install dependencies
         run: >
           sudo apt-get install -q -y
