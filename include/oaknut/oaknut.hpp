@@ -80,12 +80,12 @@ public:
         : Policy(arg)
     {}
 
-    Label l()
+    Label l() const
     {
         return Label{Policy::current_address()};
     }
 
-    void l(Label& label)
+    void l(Label& label) const
     {
         if (label.m_addr)
             throw OaknutException{ExceptionType::LabelRedefinition};
@@ -273,7 +273,7 @@ private:
 struct PointerCodeGeneratorPolicy {
 public:
     template<typename T>
-    T ptr()
+    T ptr() const
     {
         static_assert(std::is_pointer_v<T> || std::is_same_v<T, std::uintptr_t> || std::is_same_v<T, std::intptr_t>);
         return reinterpret_cast<T>(m_ptr);
@@ -296,12 +296,12 @@ protected:
         *m_ptr++ = instruction;
     }
 
-    std::uintptr_t current_address()
+    std::uintptr_t current_address() const
     {
         return reinterpret_cast<std::uintptr_t>(m_ptr);
     }
 
-    void set_at_address(std::uintptr_t addr, std::uint32_t value, std::uint32_t mask)
+    void set_at_address(std::uintptr_t addr, std::uint32_t value, std::uint32_t mask) const
     {
         std::uint32_t* p = reinterpret_cast<std::uint32_t*>(addr);
         *p = (*p & mask) | value;
