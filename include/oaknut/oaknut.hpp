@@ -53,6 +53,18 @@ struct Label {
 public:
     Label() = default;
 
+    bool is_bound() const
+    {
+        return m_addr.has_value();
+    }
+
+    template<typename T>
+    T ptr() const
+    {
+        static_assert(std::is_pointer_v<T> || std::is_same_v<T, std::uintptr_t> || std::is_same_v<T, std::intptr_t>);
+        return reinterpret_cast<T>(m_addr.value());
+    }
+
 private:
     template<typename Policy>
     friend class BasicCodeGenerator;
