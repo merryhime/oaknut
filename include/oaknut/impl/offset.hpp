@@ -45,7 +45,7 @@ struct AddrOffset {
         : m_payload(&label)
     {}
 
-    AddrOffset(void* ptr)
+    AddrOffset(const void* ptr)
         : m_payload(ptr)
     {}
 
@@ -63,7 +63,7 @@ struct AddrOffset {
 private:
     template<typename Policy>
     friend class BasicCodeGenerator;
-    std::variant<std::uint32_t, Label*, void*> m_payload;
+    std::variant<std::uint32_t, Label*, const void*> m_payload;
 };
 
 template<std::size_t bitsize, std::size_t shift_amount>
