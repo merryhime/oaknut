@@ -1,6 +1,6 @@
 # Oaknut
 
-*A C++20 assembler for AArch64 (ARMv8.0 to ARMv8.2)*
+*A C++20 assembler for AArch64 (ARMv8.0 to ARMv8.3)*
 
 Oaknut is a header-only library that allows one to dynamically assemble code in-memory at runtime.
 
@@ -122,9 +122,11 @@ int main()
 ### Instructions
 
 Each AArch64 instruction corresponds to one emitter function. For a list of emitter functions see:
+
 * ARMv8.0: [general instructions](include/oaknut/impl/mnemonics_generic_v8.0.inc.hpp), [FP & SIMD instructions](include/oaknut/impl/mnemonics_fpsimd_v8.0.inc.hpp)
 * ARMv8.1: [general instructions](include/oaknut/impl/mnemonics_generic_v8.1.inc.hpp), [FP & SIMD instructions](include/oaknut/impl/mnemonics_fpsimd_v8.1.inc.hpp)
 * ARMv8.2: [general instructions](include/oaknut/impl/mnemonics_generic_v8.2.inc.hpp), [FP & SIMD instructions](include/oaknut/impl/mnemonics_fpsimd_v8.2.inc.hpp)
+* ARMv8.3: [general instructions](include/oaknut/impl/mnemonics_generic_v8.3.inc.hpp), [FP & SIMD instructions](include/oaknut/impl/mnemonics_fpsimd_v8.3.inc.hpp)
 
 ### Operands
 
