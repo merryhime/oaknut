@@ -35,6 +35,7 @@ OAKNUT_STD_ENCODE(FImm8, v.m_encoded, 8)
 OAKNUT_STD_ENCODE(RepImm, v.m_encoded, 8)
 
 OAKNUT_STD_ENCODE(Cond, v, 4)
+OAKNUT_STD_ENCODE(Rot, v, 2)
 OAKNUT_STD_ENCODE(AddSubExt, v, 3)
 OAKNUT_STD_ENCODE(IndexExt, v, 3)
 OAKNUT_STD_ENCODE(AddSubShift, v, 2)

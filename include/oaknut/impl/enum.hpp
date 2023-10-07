@@ -43,6 +43,13 @@ constexpr Cond invert(Cond c)
     return static_cast<Cond>(static_cast<unsigned>(c) ^ 1);
 }
 
+enum class Rot {
+    DEG_0 = 0b00,
+    DEG_90 = 0b01,
+    DEG_180 = 0b10,
+    DEG_270 = 0b11,
+};
+
 enum class AddSubExt {
     UXTB,
     UXTH,
