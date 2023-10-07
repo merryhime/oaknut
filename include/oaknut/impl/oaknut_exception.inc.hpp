@@ -37,6 +37,7 @@ OAKNUT_EXCEPTION(InvalidCond, "Cond cannot be AL or NV here")
 OAKNUT_EXCEPTION(InvalidPairFirst, "Requires even register")
 OAKNUT_EXCEPTION(InvalidPairSecond, "Invalid second register in pair")
 OAKNUT_EXCEPTION(InvalidOperandXZR, "xzr invalid here")
+OAKNUT_EXCEPTION(InvalidRotation, "Invalid rotation operand")
 
 // oaknut.hpp
 OAKNUT_EXCEPTION(InvalidAlignment, "invalid alignment")
