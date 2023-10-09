@@ -107,6 +107,60 @@ std::uint32_t encode(List<T, N> v)
     return encode<splat>(v.m_base);
 }
 
+template<std::uint32_t splat, std::size_t size, std::size_t align>
+std::uint32_t encode(AddrOffset<size, align> v)
+{
+    static_assert(std::popcount(splat) == size - align);
+
+    const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
+        const std::ptrdiff_t diff = target - current_addr;
+        return pdep<splat>(AddrOffset<size, align>::encode(diff));
+    };
+
+    return std::visit(detail::overloaded{
+                          [&](std::uint32_t encoding) {
+                              return pdep<splat>(encoding);
+                          },
+                          [&](Label* label) {
+                              if (label->m_addr) {
+                                  return encode_fn(Policy::current_address(), *label->m_addr);
+                              }
+
+                              label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
+                              return 0u;
+                          },
+                          [&](const void* p) {
+                              return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
+                          },
+                      },
+                      v.m_payload);
+}
+
+template<std::uint32_t splat, std::size_t size, std::size_t shift_amount>
+std::uint32_t encode(PageOffset<size, shift_amount> v)
+{
+    static_assert(std::popcount(splat) == size);
+
+    const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
+        return pdep<splat>(PageOffset<size, shift_amount>::encode(current_addr, target));
+    };
+
+    return std::visit(detail::overloaded{
+                          [&](Label* label) {
+                              if (label->m_addr) {
+                                  return encode_fn(Policy::current_address(), *label->m_addr);
+                              }
+
+                              label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
+                              return 0u;
+                          },
+                          [&](const void* p) {
+                              return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
+                          },
+                      },
+                      v.m_payload);
+}
+
 #undef OAKNUT_STD_ENCODE
 
 void addsubext_lsl_correction(AddSubExt& ext, XRegSp)

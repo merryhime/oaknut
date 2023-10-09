@@ -17,37 +17,12 @@
 #include "oaknut/impl/list.hpp"
 #include "oaknut/impl/multi_typed_name.hpp"
 #include "oaknut/impl/offset.hpp"
+#include "oaknut/impl/overloaded.hpp"
 #include "oaknut/impl/reg.hpp"
 #include "oaknut/impl/string_literal.hpp"
 #include "oaknut/oaknut_exception.hpp"
 
 namespace oaknut {
-
-namespace detail {
-
-template<StringLiteral bs, StringLiteral barg>
-constexpr std::uint32_t get_bits()
-{
-    std::uint32_t result = 0;
-    for (std::size_t i = 0; i < 32; i++) {
-        for (std::size_t a = 0; a < barg.strlen; a++) {
-            if (bs.value[i] == barg.value[a]) {
-                result |= 1 << (31 - i);
-            }
-        }
-    }
-    return result;
-}
-
-template<class... Ts>
-struct overloaded : Ts... {
-    using Ts::operator()...;
-};
-
-template<class... Ts>
-overloaded(Ts...) -> overloaded<Ts...>;
-
-}  // namespace detail
 
 struct Label {
 public:
@@ -222,63 +197,9 @@ private:
     template<StringLiteral bs, StringLiteral... bargs, typename... Ts>
     void emit(Ts... args)
     {
-        std::uint32_t encoding = detail::get_bits<bs, "1">();
-        encoding |= (0 | ... | encode<detail::get_bits<bs, bargs>()>(std::forward<Ts>(args)));
+        constexpr std::uint32_t base = detail::find<bs, "1">();
+        std::uint32_t encoding = (base | ... | encode<detail::find<bs, bargs>()>(std::forward<Ts>(args)));
         Policy::append(encoding);
-    }
-
-    template<std::uint32_t splat, std::size_t size, std::size_t align>
-    std::uint32_t encode(AddrOffset<size, align> v)
-    {
-        static_assert(std::popcount(splat) == size - align);
-
-        const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
-            const std::ptrdiff_t diff = target - current_addr;
-            return pdep<splat>(AddrOffset<size, align>::encode(diff));
-        };
-
-        return std::visit(detail::overloaded{
-                              [&](std::uint32_t encoding) {
-                                  return pdep<splat>(encoding);
-                              },
-                              [&](Label* label) {
-                                  if (label->m_addr) {
-                                      return encode_fn(Policy::current_address(), *label->m_addr);
-                                  }
-
-                                  label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
-                                  return 0u;
-                              },
-                              [&](const void* p) {
-                                  return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
-                              },
-                          },
-                          v.m_payload);
-    }
-
-    template<std::uint32_t splat, std::size_t size, std::size_t shift_amount>
-    std::uint32_t encode(PageOffset<size, shift_amount> v)
-    {
-        static_assert(std::popcount(splat) == size);
-
-        const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
-            return pdep<splat>(PageOffset<size, shift_amount>::encode(current_addr, target));
-        };
-
-        return std::visit(detail::overloaded{
-                              [&](Label* label) {
-                                  if (label->m_addr) {
-                                      return encode_fn(Policy::current_address(), *label->m_addr);
-                                  }
-
-                                  label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
-                                  return 0u;
-                              },
-                              [&](const void* p) {
-                                  return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
-                              },
-                          },
-                          v.m_payload);
     }
 };
 
