@@ -8,7 +8,7 @@ static constexpr std::uint32_t pdep(std::uint32_t val)
     std::uint32_t res = 0;
     for (std::uint32_t bb = 1; mask; bb += bb) {
         if (val & bb)
-            res |= mask & -mask;
+            res |= mask & (~mask + 1);
         mask &= mask - 1;
     }
     return res;

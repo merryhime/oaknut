@@ -167,13 +167,13 @@ void BFI(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
         throw OaknutException{ExceptionType::InvalidBitWidth};
-    emit<"0011001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
+    emit<"0011001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (~lsb.value() + 1) & 31, width.value() - 1);
 }
 void BFI(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
         throw OaknutException{ExceptionType::InvalidBitWidth};
-    emit<"1011001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
+    emit<"1011001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (~lsb.value() + 1) & 63, width.value() - 1);
 }
 void BFM(WReg wd, WReg wn, Imm<5> immr, Imm<5> imms)
 {
@@ -1231,13 +1231,13 @@ void SBFIZ(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
         throw OaknutException{ExceptionType::InvalidBitWidth};
-    emit<"0001001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
+    emit<"0001001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (~lsb.value() + 1) & 31, width.value() - 1);
 }
 void SBFIZ(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
         throw OaknutException{ExceptionType::InvalidBitWidth};
-    emit<"1001001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
+    emit<"1001001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (~lsb.value() + 1) & 63, width.value() - 1);
 }
 void SBFM(WReg wd, WReg wn, Imm<5> immr, Imm<5> imms)
 {
@@ -1627,13 +1627,13 @@ void UBFIZ(WReg wd, WReg wn, Imm<5> lsb, Imm<5> width)
 {
     if (width.value() == 0 || width.value() > (32 - lsb.value()))
         throw OaknutException{ExceptionType::InvalidBitWidth};
-    emit<"0101001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (-lsb.value()) & 31, width.value() - 1);
+    emit<"0101001100rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(wd, wn, (~lsb.value() + 1) & 31, width.value() - 1);
 }
 void UBFIZ(XReg xd, XReg xn, Imm<6> lsb, Imm<6> width)
 {
     if (width.value() == 0 || width.value() > (64 - lsb.value()))
         throw OaknutException{ExceptionType::InvalidBitWidth};
-    emit<"1101001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (-lsb.value()) & 63, width.value() - 1);
+    emit<"1101001101rrrrrrssssssnnnnnddddd", "d", "n", "r", "s">(xd, xn, (~lsb.value() + 1) & 63, width.value() - 1);
 }
 void UBFM(WReg wd, WReg wn, Imm<5> immr, Imm<5> imms)
 {
