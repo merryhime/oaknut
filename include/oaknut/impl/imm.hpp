@@ -60,9 +60,9 @@ public:
     constexpr /* implicit */ AddSubImm(std::uint64_t value_)
     {
         if ((value_ & 0xFFF) == value_) {
-            m_encoded = value_;
+            m_encoded = static_cast<std::uint32_t>(value_);
         } else if ((value_ & 0xFFF000) == value_) {
-            m_encoded = (value_ >> 12) | (1 << 12);
+            m_encoded = static_cast<std::uint32_t>((value_ >> 12) | (1 << 12));
         } else {
             throw OaknutException{ExceptionType::InvalidAddSubImm};
         }
@@ -126,18 +126,18 @@ constexpr std::optional<std::uint32_t> encode_bit_imm(std::uint64_t value)
     if (value == 0 || (~value) == 0)
         return std::nullopt;
 
-    const std::size_t rotation = std::countr_zero(value & (value + 1));
+    const int rotation = std::countr_zero(value & (value + 1));
     const std::uint64_t rot_value = std::rotr(value, rotation);
 
-    const std::size_t esize = std::countr_zero(rot_value & (rot_value + 1));
-    const std::size_t ones = std::countr_one(rot_value);
+    const int esize = std::countr_zero(rot_value & (rot_value + 1));
+    const int ones = std::countr_one(rot_value);
 
     if (std::rotr(value, esize) != value)
         return std::nullopt;
 
-    const std::uint32_t S = ((-esize) << 1) | (ones - 1);
-    const std::uint32_t R = (esize - rotation) & (esize - 1);
-    const std::uint32_t N = (~S >> 6) & 1;
+    const int S = ((-esize) << 1) | (ones - 1);
+    const int R = (esize - rotation) & (esize - 1);
+    const int N = (~S >> 6) & 1;
 
     return static_cast<std::uint32_t>((S & 0b111111) | (R << 6) | (N << 12));
 }

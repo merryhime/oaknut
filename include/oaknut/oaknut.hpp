@@ -265,7 +265,7 @@ protected:
 
     std::uintptr_t current_address() const
     {
-        return reinterpret_cast<std::uintptr_t>(m_vec.size() * sizeof(std::uint32_t));
+        return static_cast<std::uintptr_t>(m_vec.size() * sizeof(std::uint32_t));
     }
 
     void set_at_address(std::uintptr_t addr, std::uint32_t value, std::uint32_t mask) const
