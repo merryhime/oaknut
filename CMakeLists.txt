@@ -67,6 +67,7 @@ if (MASTER_PROJECT)
             /external:W0
             /external:anglebrackets
             /W4
+            /WX
             /w44263 # Non-virtual member function hides base class virtual function
             /w44265 # Class has virtual functions, but destructor is not virtual
             /w44456 # Declaration of 'var' hides previous local declaration
@@ -84,8 +85,6 @@ if (MASTER_PROJECT)
             /Zc:inline          # Omits inline functions from object-file output.
             /Zc:throwingNew     # Assumes new (without std::nothrow) never returns null.
             /volatile:iso       # Use strict standard-abiding volatile semantics
-            /bigobj             # Increase number of sections in .obj files
-            /DNOMINMAX
         )
     else()
         target_compile_options(oaknut-tests PRIVATE -Wall -Wextra -Wcast-qual -pedantic -pedantic-errors -Wfatal-errors -Wno-missing-braces)
