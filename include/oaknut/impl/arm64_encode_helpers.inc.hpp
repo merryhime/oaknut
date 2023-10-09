@@ -129,7 +129,7 @@ std::uint32_t encode(AddrOffset<size, align> v)
                               label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
                               return 0u;
                           },
-                          [&](const void* p) {
+                          [&]([[maybe_unused]] const void* p) {
                               if constexpr (Policy::has_absolute_addresses) {
                                   return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
                               } else {
@@ -159,7 +159,7 @@ std::uint32_t encode(PageOffset<size, shift_amount> v)
                               label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
                               return 0u;
                           },
-                          [&](const void* p) {
+                          [&]([[maybe_unused]] const void* p) {
                               if constexpr (Policy::has_absolute_addresses) {
                                   return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
                               } else {
