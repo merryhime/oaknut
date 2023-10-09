@@ -118,10 +118,10 @@ std::uint32_t encode(AddrOffset<size, align> v)
     };
 
     return std::visit(detail::overloaded{
-                          [&](std::uint32_t encoding) {
+                          [&](std::uint32_t encoding) -> std::uint32_t {
                               return pdep<splat>(encoding);
                           },
-                          [&](Label* label) {
+                          [&](Label* label) -> std::uint32_t {
                               if (label->m_addr) {
                                   return encode_fn(Policy::current_address(), *label->m_addr);
                               }
@@ -129,12 +129,11 @@ std::uint32_t encode(AddrOffset<size, align> v)
                               label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
                               return 0u;
                           },
-                          [&]([[maybe_unused]] const void* p) {
+                          [&]([[maybe_unused]] const void* p) -> std::uint32_t {
                               if constexpr (Policy::has_absolute_addresses) {
                                   return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
                               } else {
                                   throw OaknutException{ExceptionType::RequiresAbsoluteAddressesContext};
-                                  return 0u;
                               }
                           },
                       },
@@ -151,7 +150,7 @@ std::uint32_t encode(PageOffset<size, shift_amount> v)
     };
 
     return std::visit(detail::overloaded{
-                          [&](Label* label) {
+                          [&](Label* label) -> std::uint32_t {
                               if (label->m_addr) {
                                   return encode_fn(Policy::current_address(), *label->m_addr);
                               }
@@ -159,12 +158,11 @@ std::uint32_t encode(PageOffset<size, shift_amount> v)
                               label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
                               return 0u;
                           },
-                          [&]([[maybe_unused]] const void* p) {
+                          [&]([[maybe_unused]] const void* p) -> std::uint32_t {
                               if constexpr (Policy::has_absolute_addresses) {
                                   return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
                               } else {
                                   throw OaknutException{ExceptionType::RequiresAbsoluteAddressesContext};
-                                  return 0u;
                               }
                           },
                       },
