@@ -23,13 +23,18 @@ set(header_files
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/list.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_fpsimd_v8.0.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_fpsimd_v8.1.inc.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_fpsimd_v8.2.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_generic_v8.0.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_generic_v8.1.inc.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/mnemonics_generic_v8.2.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/multi_typed_name.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/offset.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/overloaded.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/reg.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/string_literal.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/code_block.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/oaknut.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/oaknut_exception.hpp
 )
 
 # Library definition
@@ -52,6 +57,7 @@ if (MASTER_PROJECT)
         tests/basic.cpp
         tests/fpsimd.cpp
         tests/general.cpp
+        tests/vector_code_gen.cpp
     )
     target_include_directories(oaknut-tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests)
     target_link_libraries(oaknut-tests PRIVATE Catch2::Catch2WithMain merry::oaknut)

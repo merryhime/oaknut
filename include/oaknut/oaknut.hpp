@@ -244,7 +244,42 @@ private:
     std::uint32_t* m_ptr;
 };
 
+struct VectorCodeGeneratorPolicy {
+public:
+    std::ptrdiff_t offset() const
+    {
+        return static_cast<std::ptrdiff_t>(m_vec.size() * sizeof(std::uint32_t));
+    }
+
+protected:
+    using constructor_argument_type = std::vector<std::uint32_t>&;
+
+    VectorCodeGeneratorPolicy(std::vector<std::uint32_t>& vec)
+        : m_vec(vec)
+    {}
+
+    void append(std::uint32_t instruction)
+    {
+        m_vec.push_back(instruction);
+    }
+
+    std::uintptr_t current_address() const
+    {
+        return reinterpret_cast<std::uintptr_t>(m_vec.size() * sizeof(std::uint32_t));
+    }
+
+    void set_at_address(std::uintptr_t addr, std::uint32_t value, std::uint32_t mask) const
+    {
+        std::uint32_t& p = m_vec[addr / sizeof(std::uint32_t)];
+        p = (p & mask) | value;
+    }
+
+private:
+    std::vector<std::uint32_t>& m_vec;
+};
+
 using CodeGenerator = BasicCodeGenerator<PointerCodeGeneratorPolicy>;
+using VectorCodeGenerator = BasicCodeGenerator<VectorCodeGeneratorPolicy>;
 
 namespace util {
 
