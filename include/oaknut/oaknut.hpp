@@ -160,13 +160,17 @@ public:
     // Convenience function for moving pointers to registers
     void MOVP2R(XReg xd, const void* addr)
     {
-        int64_t diff = reinterpret_cast<uint64_t>(addr) - Policy::current_address();
-        if (diff >= -0xF'FFFF && diff <= 0xF'FFFF) {
-            ADR(xd, addr);
-        } else if (diff >= -int64_t{0xFFFF'FFFF} && diff <= int64_t{0xFFFF'FFFF}) {
-            ADRL(xd, addr);
+        if constexpr (Policy::has_absolute_addresses) {
+            int64_t diff = reinterpret_cast<uint64_t>(addr) - Policy::current_address();
+            if (diff >= -0xF'FFFF && diff <= 0xF'FFFF) {
+                ADR(xd, addr);
+            } else if (diff >= -int64_t{0xFFFF'FFFF} && diff <= int64_t{0xFFFF'FFFF}) {
+                ADRL(xd, addr);
+            } else {
+                MOV(xd, reinterpret_cast<uint64_t>(addr));
+            }
         } else {
-            MOV(xd, reinterpret_cast<uint64_t>(addr));
+            throw OaknutException{ExceptionType::RequiresAbsoluteAddressesContext};
         }
     }
 
@@ -229,6 +233,8 @@ protected:
         *m_ptr++ = instruction;
     }
 
+    static constexpr bool has_absolute_addresses = true;
+
     std::uintptr_t current_address() const
     {
         return reinterpret_cast<std::uintptr_t>(m_ptr);
@@ -262,6 +268,8 @@ protected:
     {
         m_vec.push_back(instruction);
     }
+
+    static constexpr bool has_absolute_addresses = false;
 
     std::uintptr_t current_address() const
     {

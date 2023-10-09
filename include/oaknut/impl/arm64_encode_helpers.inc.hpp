@@ -130,7 +130,12 @@ std::uint32_t encode(AddrOffset<size, align> v)
                               return 0u;
                           },
                           [&](const void* p) {
-                              return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
+                              if constexpr (Policy::has_absolute_addresses) {
+                                  return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
+                              } else {
+                                  throw OaknutException{ExceptionType::RequiresAbsoluteAddressesContext};
+                                  return 0u;
+                              }
                           },
                       },
                       v.m_payload);
@@ -155,7 +160,12 @@ std::uint32_t encode(PageOffset<size, shift_amount> v)
                               return 0u;
                           },
                           [&](const void* p) {
-                              return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
+                              if constexpr (Policy::has_absolute_addresses) {
+                                  return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
+                              } else {
+                                  throw OaknutException{ExceptionType::RequiresAbsoluteAddressesContext};
+                                  return 0u;
+                              }
                           },
                       },
                       v.m_payload);
