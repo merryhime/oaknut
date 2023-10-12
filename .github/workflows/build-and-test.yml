@@ -45,7 +45,7 @@ jobs:
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: qemu-aarch64 -L /usr/aarch64-linux-gnu ./oaknut-tests -d yes
-        
+
   test_on_windows:
     runs-on: windows-latest
     name: msvc-arm64
@@ -60,7 +60,7 @@ jobs:
           repository: catchorg/Catch2
           ref: v3.2.0
           path: externals/catch
-      
+
       - name: Setup msvc-arm64 environment
         uses: ilammy/msvc-dev-cmd@v1
         with:
@@ -71,6 +71,37 @@ jobs:
           cmake
           -B ${{github.workspace}}/build
           -GNinja
+          -DOAKNUT_USE_BUNDLED_CATCH=ON
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . --config Release
+
+  test_on_macos:
+    runs-on: macos-latest
+    name: macos-arm64
+
+    steps:
+      - name: Checkout oaknut repo
+        uses: actions/checkout@v3
+
+      - name: Checkout Catch2 v3 repo
+        uses: actions/checkout@v3
+        with:
+          repository: catchorg/Catch2
+          ref: v3.2.0
+          path: externals/catch
+
+      - name: Install dependencies
+        run: |
+          brew install ninja
+
+      - name: Configure CMake
+        run: >
+          cmake
+          -B ${{github.workspace}}/build
+          -GNinja
+          -DCMAKE_OSX_ARCHITECTURES=arm64
           -DOAKNUT_USE_BUNDLED_CATCH=ON
 
       - name: Build
