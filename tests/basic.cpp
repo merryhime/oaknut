@@ -138,6 +138,11 @@ TEST_CASE("ADR")
     }
 }
 
+TEST_CASE("PageOffset")
+{
+    REQUIRE(PageOffset<21, 12>::encode(0x0000000088e74000, 0xffffffffd167dece) == 0xd2202);
+}
+
 TEST_CASE("ADRP")
 {
     CodeBlock mem{4096};
