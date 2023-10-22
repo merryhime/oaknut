@@ -107,3 +107,29 @@ jobs:
       - name: Build
         working-directory: ${{github.workspace}}/build
         run: cmake --build . --config Release
+
+  test_on_freebsd:
+    runs-on: ubuntu-latest
+    name: freebsd-arm64
+
+    steps:
+      - name: Checkout oaknut repo
+        uses: actions/checkout@v3
+
+      - name: Build and Test
+        uses: cross-platform-actions/action@v0.19.1
+        with:
+          operating_system: freebsd
+          architecture: arm64
+          version: '13.2'
+          shell: bash
+          memory: 5G
+          cpu_count: 4
+          run: |
+            pwd
+            sudo pkg update
+            sudo pkg install -y catch2 cmake ninja
+            cmake -B ${{github.workspace}}/build -GNinja
+            cd build
+            cmake --build . --config Release
+            ./oaknut-tests -d yes
