@@ -17,7 +17,11 @@ endif()
 
 # Source project files
 set(header_files
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/code_block.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/feature_detection/cpu_feature.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/feature_detection/feature_detection.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/arm64_encode_helpers.inc.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/cpu_feature.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/enum.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/imm.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/list.hpp
@@ -32,7 +36,6 @@ set(header_files
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/overloaded.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/reg.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/string_literal.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/code_block.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/oaknut.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/oaknut_exception.hpp
 )
@@ -54,6 +57,7 @@ if (MASTER_PROJECT)
     endif()
 
     add_executable(oaknut-tests
+        tests/_feature_detect.cpp
         tests/basic.cpp
         tests/fpsimd.cpp
         tests/general.cpp
