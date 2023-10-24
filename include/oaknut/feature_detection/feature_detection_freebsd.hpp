@@ -3,10 +3,15 @@
 
 #pragma once
 
+#include <cstdint>
+#include <optional>
+
 #include <sys/auxv.h>
 
 #include "oaknut/feature_detection/cpu_feature.hpp"
 #include "oaknut/feature_detection/feature_detection_hwcaps.hpp"
+#include "oaknut/feature_detection/id_registers.hpp"
+#include "oaknut/feature_detection/read_id_registers_directly.hpp"
 
 #ifndef AT_HWCAP
 #    define AT_HWCAP 16
@@ -35,6 +40,13 @@ inline CpuFeatures detect_features_via_hwcap()
     const unsigned long hwcap = detail::getauxval(AT_HWCAP);
     const unsigned long hwcap2 = detail::getauxval(AT_HWCAP2);
     return detect_features_via_hwcap(hwcap, hwcap2);
+}
+
+inline std::optional<id::IdRegisters> read_id_registers()
+{
+    // HWCAP_CPUID is falsely not set on many FreeBSD kernel versions,
+    // so we don't bother checking it.
+    return id::read_id_registers_directly();
 }
 
 inline CpuFeatures detect_features()

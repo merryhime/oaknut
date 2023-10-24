@@ -20,6 +20,7 @@ set(header_files
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/code_block.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/feature_detection/cpu_feature.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/feature_detection/feature_detection.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/feature_detection/id_registers.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/arm64_encode_helpers.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/cpu_feature.inc.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/impl/enum.hpp
