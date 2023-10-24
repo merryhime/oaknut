@@ -4,10 +4,12 @@
 #pragma once
 
 #include <cstddef>
+#include <optional>
 
 #include <sys/sysctl.h>
 
 #include "oaknut/feature_detection/cpu_feature.hpp"
+#include "oaknut/feature_detection/id_registers.hpp"
 
 namespace oaknut {
 
@@ -100,6 +102,11 @@ inline CpuFeatures detect_features_via_sysctlbyname()
 inline CpuFeatures detect_features()
 {
     return detect_features_via_sysctlbyname();
+}
+
+inline std::optional<id::IdRegisters> read_id_registers()
+{
+    return std::nullopt;
 }
 
 }  // namespace oaknut
