@@ -57,6 +57,7 @@ if (MASTER_PROJECT)
         tests/basic.cpp
         tests/fpsimd.cpp
         tests/general.cpp
+        tests/rand_int.hpp
         tests/vector_code_gen.cpp
     )
     target_include_directories(oaknut-tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests)

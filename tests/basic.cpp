@@ -192,7 +192,7 @@ TEST_CASE("MOVP2R")
 {
     CodeBlock mem{4096};
 
-    for (int i = 0; i < 0x200'0000; i++) {
+    for (int i = 0; i < 0x200000; i++) {
         const std::int64_t diff = RandInt<std::int64_t>(std::numeric_limits<std::int64_t>::min(),
                                                         std::numeric_limits<std::int64_t>::max());
         const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + diff;
