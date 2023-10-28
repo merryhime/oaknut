@@ -5,6 +5,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <optional>
 
 namespace oaknut::id {
 
@@ -297,7 +298,7 @@ struct Mmfr4Register {
 };
 
 struct IdRegisters {
-    std::uint64_t midr;
+    std::optional<std::uint64_t> midr;
     Pfr0Register pfr0;
     Pfr1Register pfr1;
     Pfr2Register pfr2;

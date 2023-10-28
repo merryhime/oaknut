@@ -15,6 +15,10 @@
 #    define OAKNUT_CPU_FEATURE_DETECTION 1
 #    define OAKNUT_SUPPORTS_READING_ID_REGISTERS 1
 #    include "oaknut/feature_detection/feature_detection_linux.hpp"
+#elif defined(__OpenBSD__)
+#    define OAKNUT_CPU_FEATURE_DETECTION 1
+#    define OAKNUT_SUPPORTS_READING_ID_REGISTERS 1
+#    include "oaknut/feature_detection/feature_detection_openbsd.hpp"
 #elif defined(_WIN32)
 #    define OAKNUT_CPU_FEATURE_DETECTION 1
 #    define OAKNUT_SUPPORTS_READING_ID_REGISTERS 2
