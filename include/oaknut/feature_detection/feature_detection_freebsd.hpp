@@ -24,7 +24,7 @@ namespace oaknut {
 
 namespace detail {
 
-unsigned long getauxval(int aux)
+inline unsigned long getauxval(int aux)
 {
     unsigned long result = 0;
     if (::elf_aux_info(aux, &result, static_cast<int>(sizeof result)) == 0) {
