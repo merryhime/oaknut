@@ -6,12 +6,13 @@ Oaknut is a header-only library that allows one to dynamically assemble code in-
 
 ## Usage
 
-Provide `oaknut::CodeGenerator` with a pointer to a block of memory. Call functions on it to emit code.
+Give `oaknut::CodeGenerator` a pointer to a block of memory. Call functions on it to emit code.
 
 Simple example:
 
 ```cpp
 #include <cstdio>
+#include <oaknut/code_block.hpp>
 #include <oaknut/oaknut.hpp>
 
 using EmittedFunction = int (*)();
@@ -45,6 +46,44 @@ int main()
     return 0;
 }
 ```
+
+### Emit to `std::vector`
+
+If you wish to merely emit code into memory without executing it, or if you are developing a cross-compiler that is not running on an ARM64 device, you can use `oaknut::VectorCodeGenerator` instead.
+
+Provide `oaknut::VectorCodeGenerator` with a reference to a `std::vector<std::uint32_t>` and it will append to that vector.
+
+Simple example:
+
+```cpp
+#include <cstdint>
+#include <cstdio>
+#include <oaknut/oaknut.hpp>
+#include <vector>
+
+int main()
+{
+    std::vector<std::uint32_t> vec;
+    oaknut::VectorCodeGenerator code{vec};
+
+    code.MOV(W0, 42);
+    code.RET();
+
+    std::printf("%08x %08x\n", vec[0], vec[1]);  // Output: d2800540 d65f03c0
+
+    return 0;
+}
+```
+
+## Headers
+
+| Header | Compiles on non-ARM64 | Contents |
+| ------ | --------------------- | -------- |
+| `<oaknut/oaknut.hpp>` | Yes | Provides `CodeGenerator` and `VectorCodeGenerator` for code emission, as well as the `oaknut::util` namespace. |
+| `<oaknut/code_block.hpp>` | No | Utility header that provides `CodeBlock`, allocates, alters permissions of, and invalidates executable memory. |
+| `<oaknut/oaknut_exception.hpp>` | Yes | Provides `OaknutException` which is thrown on an error. |
+| `<oaknut/feature_detection/cpu_feature.hpp>` | Yes | Utility header that provides `CpuFeatures` which can be used to describe AArch64 features. |
+| `<oaknut/feature_detection/feature_detection.hpp>` | No | Utility header that provides `detect_features` and `read_id_registers` for determining available AArch64 features. |
 
 ### Instructions
 
@@ -107,6 +146,83 @@ List{V0.B(), V1.B(), V2.B()}[1]        // This expression has type List<BElem, 3
 ```
 
 You can find examples of instruction use in [tests/general.cpp](tests/general.cpp) and [tests/fpsimd.cpp](tests/fpsimd.cpp).
+
+## Feature Detection
+
+### CPU features
+
+This library also includes utility headers for CPU feature detection.
+
+One just needs to include `<oaknut/feature_detection/feature_detection.hpp>`, then call `detect_features` to get a bitset of features in a cross-platform manner.
+
+CPU feature detection is operating system specific, and some operating systems even have multiple methods. Here are a list of supported operating systems and implemented methods:
+
+| Operating system | Default Method |
+| ---- | ---- |
+| Linux / Android | [ELF hwcaps](https://www.kernel.org/doc/html/latest/arch/arm64/elf_hwcaps.html) |
+| Apple | [sysctlbyname](https://developer.apple.com/documentation/kernel/1387446-sysctlbyname) |
+| Windows | [IsProcessorFeaturePresent](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-isprocessorfeaturepresent) |
+| FreeBSD | ELF hwcaps |
+| NetBSD | machdep.cpu%d.cpu_id sysctl |
+| OpenBSD | CTL_MACHDEP.CPU_ID_* sysctl |
+
+There are alternative methods available for advanced users to specify specific methods to detect features if they wish. (See `detect_features_via_*`.)
+
+Simple example:
+
+```cpp
+#include <cstdio>
+#include <oaknut/feature_detection/feature_detection.hpp>
+
+int main() {
+    oaknut::CpuFeatures feats = detect_features();
+
+    std::printf("CPU supports JSCVT: %i\n", feats.has(oaknut::CpuFeature::JSCVT));
+}
+```
+
+### ID registers
+
+We also provide a crossplatform way for ID registers to be read:
+
+| **`OAKNUT_SUPPORTS_READING_ID_REGISTERS`** | Available functionality |
+| ---- | ---- |
+| 0 | Reading ID registers is not supported on this operating system. |
+| 1 | This operating system provides a system-wide set of ID registers, use `read_id_registers()`. |
+| 2 | Per-core ID registers, use `get_core_count()` and `read_id_registers(int index)`. |
+
+All of the above operating systems with the exception of apple also support reading ID registers, and if one prefers one can do feature detection via `detect_features_via_id_registers(*read_id_registers())`.
+
+Simple example:
+
+```cpp
+#include <cstddef>
+#include <cstdio>
+#include <oaknut/feature_detection/feature_detection.hpp>
+
+int main() {
+#if OAKNUT_SUPPORTS_READING_ID_REGISTERS == 1
+
+    oaknut::id:IdRegisters id = read_id_registers();
+
+    std::printf("ISAR0 register: %08x\n", id.isar0.value);
+
+#elif OAKNUT_SUPPORTS_READING_ID_REGISTERS == 2
+
+    oaknut::id:IdRegisters id = read_id_registers(0);
+
+    const std::size_t core_count = oaknut::get_core_count();
+    for (std::size_t core_index = 0; core_index < core_count; core_index++) {
+        std::printf("ISAR0 register (for core %zu): %08x\n", core_index, id.isar0.value);
+    }
+
+#else
+
+    std::printf("Reading ID registers not supported\n");
+
+#endif
+}
+```
 
 ## License
 
