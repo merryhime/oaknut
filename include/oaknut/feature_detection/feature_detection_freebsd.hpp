@@ -7,6 +7,7 @@
 #include <optional>
 
 #include <sys/auxv.h>
+#include <sys/param.h>
 
 #include "oaknut/feature_detection/cpu_feature.hpp"
 #include "oaknut/feature_detection/feature_detection_hwcaps.hpp"
@@ -18,6 +19,10 @@
 #endif
 #ifndef AT_HWCAP2
 #    define AT_HWCAP2 26
+#endif
+
+#if __FreeBSD_version < 1300114
+#    error "Incompatible ABI change (incorrect HWCAP definitions on earlier FreeBSD versions)"
 #endif
 
 namespace oaknut {
