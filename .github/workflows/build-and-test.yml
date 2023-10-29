@@ -20,6 +20,22 @@ jobs:
           ninja-build
           qemu-user
 
+      - name: Checkout qemu
+        uses: actions/checkout@v3
+        with:
+          repository: qemu/qemu
+          ref: v8.1.2
+          path: externals/qemu
+
+      - name: Build qemu
+        working-directory: externals/qemu
+        run: |
+          sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build
+          mkdir build
+          cd build
+          ../configure --target-list=aarch64-linux-user
+          make -j4 qemu-aarch64
+
       - name: Checkout Catch2 v3 repo
         uses: actions/checkout@v3
         with:
@@ -44,7 +60,7 @@ jobs:
 
       - name: Test
         working-directory: ${{github.workspace}}/build
-        run: qemu-aarch64 -L /usr/aarch64-linux-gnu ./oaknut-tests -d yes
+        run: ../externals/qemu/build/qemu-aarch64 -L /usr/aarch64-linux-gnu ./oaknut-tests -d yes
 
   test_on_windows:
     runs-on: windows-latest
