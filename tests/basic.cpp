@@ -77,7 +77,7 @@ TEST_CASE("Fibonacci")
     REQUIRE(fib(9) == 34);
 }
 
-TEST_CASE("Immediate generation (32-bit)")
+TEST_CASE("Immediate generation (32-bit)", "[slow]")
 {
     CodeBlock mem{4096};
 
@@ -97,7 +97,7 @@ TEST_CASE("Immediate generation (32-bit)")
     }
 }
 
-TEST_CASE("Immediate generation (64-bit)")
+TEST_CASE("Immediate generation (64-bit)", "[slow]")
 {
     CodeBlock mem{4096};
 
@@ -117,7 +117,7 @@ TEST_CASE("Immediate generation (64-bit)")
     }
 }
 
-TEST_CASE("ADR")
+TEST_CASE("ADR", "[slow]")
 {
     CodeBlock mem{4096};
 
@@ -143,7 +143,7 @@ TEST_CASE("PageOffset")
     REQUIRE(PageOffset<21, 12>::encode(0x0000000088e74000, 0xffffffffd167dece) == 0xd2202);
 }
 
-TEST_CASE("ADRP")
+TEST_CASE("ADRP", "[slow]")
 {
     CodeBlock mem{4096};
 
@@ -166,7 +166,7 @@ TEST_CASE("ADRP")
     }
 }
 
-TEST_CASE("ADRL")
+TEST_CASE("ADRL", "[slow]")
 {
     CodeBlock mem{4096};
 
@@ -188,7 +188,7 @@ TEST_CASE("ADRL")
     }
 }
 
-TEST_CASE("MOVP2R")
+TEST_CASE("MOVP2R", "[slow]")
 {
     CodeBlock mem{4096};
 

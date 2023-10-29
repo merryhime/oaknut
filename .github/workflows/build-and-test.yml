@@ -169,4 +169,4 @@ jobs:
             cmake -B ${{github.workspace}}/build -GNinja
             cd build
             cmake --build . --config Release
-            ./oaknut-tests -d yes
+            ./oaknut-tests -d yes "~[slow]"
