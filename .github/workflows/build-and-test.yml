@@ -123,12 +123,33 @@ jobs:
           architecture: arm64
           version: '13.2'
           shell: bash
-          memory: 5G
-          cpu_count: 4
           run: |
             pwd
             sudo pkg update
             sudo pkg install -y catch2 cmake ninja
+            cmake -B ${{github.workspace}}/build -GNinja
+            cd build
+            cmake --build . --config Release
+            ./oaknut-tests -d yes
+
+  test_on_openbsd:
+    runs-on: ubuntu-latest
+    name: openbsd-arm64
+
+    steps:
+      - name: Checkout oaknut repo
+        uses: actions/checkout@v3
+
+      - name: Build and Test
+        uses: cross-platform-actions/action@v0.19.1
+        with:
+          operating_system: openbsd
+          architecture: arm64
+          version: '7.3'
+          shell: bash
+          run: |
+            pwd
+            sudo pkg_add catch2 cmake ninja
             cmake -B ${{github.workspace}}/build -GNinja
             cd build
             cmake --build . --config Release
