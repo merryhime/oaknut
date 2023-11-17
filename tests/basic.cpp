@@ -220,16 +220,17 @@ TEST_CASE("ADRL (far)", "[slow]")
     }
 }
 
-TEST_CASE("MOVP2R", "[slow]")
+TEST_CASE("MOVP2R (far)", "[slow]")
 {
     CodeBlock mem{4096};
+    std::uint32_t* const mem_ptr = mem.ptr() + 42;  // create small offset for testing
 
     for (int i = 0; i < 0x200000; i++) {
         const std::int64_t diff = RandInt<std::int64_t>(std::numeric_limits<std::int64_t>::min(),
                                                         std::numeric_limits<std::int64_t>::max());
-        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + diff;
+        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem_ptr) + diff;
 
-        CodeGenerator code{mem.ptr()};
+        CodeGenerator code{mem_ptr};
 
         auto f = code.ptr<std::uint64_t (*)()>();
         mem.unprotect();
@@ -239,5 +240,30 @@ TEST_CASE("MOVP2R", "[slow]")
         mem.invalidate_all();
 
         REQUIRE(f() == static_cast<std::uint64_t>(value));
+    }
+}
+
+TEST_CASE("MOVP2R (4GiB boundary)")
+{
+    CodeBlock mem{4096};
+    std::uint32_t* const mem_ptr = mem.ptr() + 42;  // create small offset for testing
+
+    for (std::int64_t i = 0xFFFF'F000; i < 0x1'0000'1000; i++) {
+        const auto test = [&](std::int64_t diff) {
+            const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem_ptr) + diff;
+
+            CodeGenerator code{mem_ptr};
+
+            auto f = code.ptr<std::uint64_t (*)()>();
+            mem.unprotect();
+            code.MOVP2R(X0, reinterpret_cast<void*>(value));
+            code.RET();
+            mem.protect();
+            mem.invalidate_all();
+
+            REQUIRE(f() == static_cast<std::uint64_t>(value));
+        };
+        test(i);
+        test(-i);
     }
 }

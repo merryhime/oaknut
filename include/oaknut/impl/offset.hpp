@@ -85,6 +85,12 @@ struct PageOffset {
         return static_cast<std::uint32_t>(((diff & 3) << (bitsize - 2)) | (diff >> 2));
     }
 
+    static bool valid(std::uintptr_t current_addr, std::uintptr_t target)
+    {
+        std::uint64_t diff = static_cast<std::uint64_t>((static_cast<std::int64_t>(target) >> shift_amount) - (static_cast<std::int64_t>(current_addr) >> shift_amount));
+        return detail::sign_extend<bitsize>(diff) == diff;
+    }
+
 private:
     template<typename Policy>
     friend class BasicCodeGenerator;

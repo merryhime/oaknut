@@ -161,10 +161,10 @@ public:
     void MOVP2R(XReg xd, const void* addr)
     {
         if constexpr (Policy::has_absolute_addresses) {
-            int64_t diff = reinterpret_cast<uint64_t>(addr) - Policy::current_address();
+            const int64_t diff = reinterpret_cast<std::uint64_t>(addr) - Policy::current_address();
             if (diff >= -0xF'FFFF && diff <= 0xF'FFFF) {
                 ADR(xd, addr);
-            } else if (diff >= -int64_t{0xFFFF'FFFF} && diff <= int64_t{0xFFFF'FFFF}) {
+            } else if (PageOffset<21, 12>::valid(Policy::current_address(), reinterpret_cast<std::uintptr_t>(addr))) {
                 ADRL(xd, addr);
             } else {
                 MOV(xd, reinterpret_cast<uint64_t>(addr));
