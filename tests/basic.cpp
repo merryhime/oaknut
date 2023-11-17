@@ -138,9 +138,17 @@ TEST_CASE("ADR", "[slow]")
     }
 }
 
-TEST_CASE("PageOffset")
+TEST_CASE("PageOffset (rollover)")
 {
     REQUIRE(PageOffset<21, 12>::encode(0x0000000088e74000, 0xffffffffd167dece) == 0xd2202);
+}
+
+TEST_CASE("PageOffset (page boundary)")
+{
+    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000002, 0x0001000000000001) == 0);
+    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000001, 0x0001000000000002) == 0);
+    REQUIRE(PageOffset<21, 12>::encode(0x0001000000001000, 0x0001000000000fff) == 0x1fffff);
+    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000fff, 0x0001000000001000) == 0x080000);
 }
 
 TEST_CASE("ADRP", "[slow]")
@@ -166,15 +174,39 @@ TEST_CASE("ADRP", "[slow]")
     }
 }
 
-TEST_CASE("ADRL", "[slow]")
+TEST_CASE("ADRL (near)")
 {
     CodeBlock mem{4096};
+    std::uint32_t* const mem_ptr = mem.ptr() + 42;  // create small offset for testing
+
+    for (int i = -0x4000; i < 0x4000; i++) {
+        const std::int64_t diff = i;
+        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem_ptr) + diff;
+
+        CodeGenerator code{mem_ptr};
+
+        auto f = code.ptr<std::uint64_t (*)()>();
+        mem.unprotect();
+        code.ADRL(X0, reinterpret_cast<void*>(value));
+        code.RET();
+        mem.protect();
+        mem.invalidate_all();
+
+        INFO(i);
+        REQUIRE(f() == static_cast<std::uint64_t>(value));
+    }
+}
+
+TEST_CASE("ADRL (far)", "[slow]")
+{
+    CodeBlock mem{4096};
+    std::uint32_t* const mem_ptr = mem.ptr() + 42;  // create small offset for testing
 
     for (int i = 0; i < 0x200000; i++) {
-        const std::int64_t diff = RandInt<std::int64_t>(-4294967296, 4294967295);
-        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + diff;
+        const std::int64_t diff = RandInt<std::int64_t>(-4294967296 + 100, 4294967295 - 100);
+        const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem_ptr) + diff;
 
-        CodeGenerator code{mem.ptr()};
+        CodeGenerator code{mem_ptr};
 
         auto f = code.ptr<std::uint64_t (*)()>();
         mem.unprotect();

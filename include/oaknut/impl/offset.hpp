@@ -78,7 +78,7 @@ struct PageOffset {
 
     static std::uint32_t encode(std::uintptr_t current_addr, std::uintptr_t target)
     {
-        std::uint64_t diff = static_cast<std::uint64_t>((static_cast<std::int64_t>(target - current_addr) >> shift_amount));
+        std::uint64_t diff = static_cast<std::uint64_t>((static_cast<std::int64_t>(target) >> shift_amount) - (static_cast<std::int64_t>(current_addr) >> shift_amount));
         if (detail::sign_extend<bitsize>(diff) != diff)
             throw OaknutException{ExceptionType::OffsetOutOfRange};
         diff &= detail::mask_from_size(bitsize);
