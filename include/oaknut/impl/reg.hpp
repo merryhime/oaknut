@@ -52,8 +52,8 @@ struct DElem;
 
 struct Reg {
     constexpr explicit Reg(bool is_vector_, unsigned bitsize_, int index_)
-        : m_index(index_)
-        , m_bitsize(bitsize_)
+        : m_index(static_cast<std::int8_t>(index_))
+        , m_bitsize(static_cast<std::uint8_t>(bitsize_))
         , m_is_vector(is_vector_)
     {
         assert(index_ >= -1 && index_ <= 31);
@@ -65,8 +65,8 @@ struct Reg {
     constexpr bool is_vector() const { return m_is_vector; }
 
 private:
-    int m_index : 8;
-    unsigned m_bitsize : 8;
+    std::int8_t m_index;
+    std::uint8_t m_bitsize;
     bool m_is_vector;
 };
 
@@ -190,7 +190,7 @@ struct VReg : public Reg {
 struct VRegArranged : public Reg {
 protected:
     constexpr explicit VRegArranged(unsigned bitsize_, int index_, unsigned esize_)
-        : Reg(true, bitsize_, index_), m_esize(esize_)
+        : Reg(true, bitsize_, index_), m_esize(static_cast<std::uint8_t>(esize_))
     {
         assert(esize_ != 0 && (esize_ & (esize_ - 1)) == 0 && "esize must be a power of two");
         assert(esize_ <= bitsize_);
@@ -200,7 +200,7 @@ protected:
     friend class BasicCodeGenerator;
 
 private:
-    int m_esize : 8;
+    std::uint8_t m_esize;
 };
 
 struct VReg_2H : public VRegArranged {
