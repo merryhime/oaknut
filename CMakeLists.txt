@@ -5,7 +5,7 @@ project(oaknut LANGUAGES CXX VERSION 1.2.2)
 # or if this is the master project.
 set(MASTER_PROJECT OFF)
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-  set(MASTER_PROJECT ON)
+    set(MASTER_PROJECT ON)
 endif()
 
 # Disable in-source builds
@@ -41,11 +41,16 @@ set(header_files
     ${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut/oaknut_exception.hpp
 )
 
+include(GNUInstallDirs)
+
 # Library definition
 add_library(oaknut INTERFACE)
 add_library(merry::oaknut ALIAS oaknut)
 target_sources(oaknut INTERFACE "$<BUILD_INTERFACE:${header_files}>")
-target_include_directories(oaknut INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_include_directories(oaknut INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_LIBDIR}>
+)
 target_compile_features(oaknut INTERFACE cxx_std_20)
 
 # Tests
@@ -97,11 +102,28 @@ if (MASTER_PROJECT)
     endif()
 endif()
 
-# Export
-include(GNUInstallDirs)
+# Install
+include(CMakePackageConfigHelpers)
 
 install(TARGETS oaknut EXPORT oaknutTargets)
 install(EXPORT oaknutTargets
     NAMESPACE merry::
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/oaknut"
+)
+
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/oaknutConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/oaknutConfig.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/oaknut"
+)
+write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/oaknutConfigVersion.cmake"
+    COMPATIBILITY SameMajorVersion
+)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/oaknutConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/oaknutConfigVersion.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/oaknut"
+)
+install(DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/oaknut"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
