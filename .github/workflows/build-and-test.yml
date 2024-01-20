@@ -170,3 +170,40 @@ jobs:
             cd build
             cmake --build . --config Release
             ./oaknut-tests -d yes "~[slow]"
+
+  test_on_android:
+    runs-on: ubuntu-latest
+    name: android
+
+    steps:
+      - name: Checkout oaknut repo
+        uses: actions/checkout@v3
+
+      - name: Update package repositories
+        run: sudo apt-get update
+
+      - name: Install dependencies
+        run: sudo apt-get install -q -y ninja-build
+
+      - name: Checkout Catch2 v3 repo
+        uses: actions/checkout@v3
+        with:
+          repository: catchorg/Catch2
+          ref: v3.2.0
+          path: externals/catch
+
+      - name: Configure CMake
+        run: >
+          cmake
+          -B ${{github.workspace}}/build
+          -H.
+          -GNinja
+          -DANDROID_ABI=arm64-v8a
+          -DANDROID_PLATFORM=29
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake
+          -DOAKNUT_USE_BUNDLED_CATCH=ON
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . --config Release
