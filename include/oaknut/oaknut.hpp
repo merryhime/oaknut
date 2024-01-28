@@ -300,8 +300,21 @@ private:
     std::uint32_t* const m_xmem;
 };
 
-using CodeGenerator = BasicCodeGenerator<PointerCodeGeneratorPolicy>;
-using VectorCodeGenerator = BasicCodeGenerator<VectorCodeGeneratorPolicy>;
+struct CodeGenerator : BasicCodeGenerator<PointerCodeGeneratorPolicy> {
+public:
+    CodeGenerator(std::uint32_t* mem)
+        : BasicCodeGenerator<PointerCodeGeneratorPolicy>(mem, mem) {}
+    CodeGenerator(std::uint32_t* wmem, std::uint32_t* xmem)
+        : BasicCodeGenerator<PointerCodeGeneratorPolicy>(wmem, xmem) {}
+};
+
+struct VectorCodeGenerator : BasicCodeGenerator<VectorCodeGeneratorPolicy> {
+public:
+    VectorCodeGenerator(std::vector<std::uint32_t>& mem)
+        : BasicCodeGenerator<VectorCodeGeneratorPolicy>(mem, nullptr) {}
+    VectorCodeGenerator(std::vector<std::uint32_t>& wmem, std::uint32_t* xmem)
+        : BasicCodeGenerator<VectorCodeGeneratorPolicy>(wmem, xmem) {}
+};
 
 namespace util {
 

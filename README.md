@@ -32,7 +32,7 @@ EmittedFunction EmitExample(oaknut::CodeGenerator& code, int value)
 int main()
 {
     oaknut::CodeBlock mem{4096};
-    oaknut::CodeGenerator code{mem.ptr(), mem.ptr()};
+    oaknut::CodeGenerator code{mem.ptr()};
 
     mem.unprotect();
 
@@ -47,7 +47,7 @@ int main()
 }
 ```
 
-CodeGenerator takes two pointers. The first pointer is the memory address to write to, and the second pointer is the memory address that the code will be executing from. This allows you to write to a buffer before copying to the final destination for execution, or to have to use dual-mapped memory blocks to avoid memory protection overhead.
+CodeGenerator also has a constructor taking two pointers. The first pointer is the memory address to write to, and the second pointer is the memory address that the code will be executing from. This allows you to write to a buffer before copying to the final destination for execution, or to have to use dual-mapped memory blocks to avoid memory protection overhead.
 
 Below is an example of using the oaknut-provided utility header for dual-mapped memory blocks:
 

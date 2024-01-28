@@ -18,7 +18,7 @@ using namespace oaknut::util;
 TEST_CASE("Basic Test")
 {
     CodeBlock mem{4096};
-    CodeGenerator code{mem.ptr(), mem.ptr()};
+    CodeGenerator code{mem.ptr()};
 
     mem.unprotect();
 
@@ -49,7 +49,7 @@ TEST_CASE("Basic Test (Dual)")
 TEST_CASE("Fibonacci")
 {
     CodeBlock mem{4096};
-    CodeGenerator code{mem.ptr(), mem.ptr()};
+    CodeGenerator code{mem.ptr()};
 
     mem.unprotect();
 
@@ -142,7 +142,7 @@ TEST_CASE("Immediate generation (32-bit)", "[slow]")
     for (int i = 0; i < 0x100000; i++) {
         const std::uint32_t value = RandInt<std::uint32_t>(0, 0xffffffff);
 
-        CodeGenerator code{mem.ptr(), mem.ptr()};
+        CodeGenerator code{mem.ptr()};
 
         auto f = code.xptr<std::uint64_t (*)()>();
         mem.unprotect();
@@ -162,7 +162,7 @@ TEST_CASE("Immediate generation (64-bit)", "[slow]")
     for (int i = 0; i < 0x100000; i++) {
         const std::uint64_t value = RandInt<std::uint64_t>(0, 0xffffffff'ffffffff);
 
-        CodeGenerator code{mem.ptr(), mem.ptr()};
+        CodeGenerator code{mem.ptr()};
 
         auto f = code.xptr<std::uint64_t (*)()>();
         mem.unprotect();
@@ -182,7 +182,7 @@ TEST_CASE("ADR", "[slow]")
     for (std::int64_t i = -1048576; i < 1048576; i++) {
         const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + i;
 
-        CodeGenerator code{mem.ptr(), mem.ptr()};
+        CodeGenerator code{mem.ptr()};
 
         auto f = code.xptr<std::intptr_t (*)()>();
         mem.unprotect();
@@ -218,7 +218,7 @@ TEST_CASE("ADRP", "[slow]")
         const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem.ptr()) + diff;
         const std::uint64_t expect = static_cast<std::uint64_t>(value) & ~static_cast<std::uint64_t>(0xfff);
 
-        CodeGenerator code{mem.ptr(), mem.ptr()};
+        CodeGenerator code{mem.ptr()};
 
         auto f = code.xptr<std::uint64_t (*)()>();
         mem.unprotect();
@@ -241,7 +241,7 @@ TEST_CASE("ADRL (near)")
         const std::int64_t diff = i;
         const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem_ptr) + diff;
 
-        CodeGenerator code{mem_ptr, mem_ptr};
+        CodeGenerator code{mem_ptr};
 
         auto f = code.xptr<std::uint64_t (*)()>();
         mem.unprotect();
@@ -264,7 +264,7 @@ TEST_CASE("ADRL (far)", "[slow]")
         const std::int64_t diff = RandInt<std::int64_t>(-4294967296 + 100, 4294967295 - 100);
         const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem_ptr) + diff;
 
-        CodeGenerator code{mem_ptr, mem_ptr};
+        CodeGenerator code{mem_ptr};
 
         auto f = code.xptr<std::uint64_t (*)()>();
         mem.unprotect();
@@ -288,7 +288,7 @@ TEST_CASE("MOVP2R (far)", "[slow]")
                                                         std::numeric_limits<std::int64_t>::max());
         const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem_ptr) + diff;
 
-        CodeGenerator code{mem_ptr, mem_ptr};
+        CodeGenerator code{mem_ptr};
 
         auto f = code.xptr<std::uint64_t (*)()>();
         mem.unprotect();
@@ -310,7 +310,7 @@ TEST_CASE("MOVP2R (4GiB boundary)")
         const auto test = [&](std::int64_t diff) {
             const std::intptr_t value = reinterpret_cast<std::intptr_t>(mem_ptr) + diff;
 
-            CodeGenerator code{mem_ptr, mem_ptr};
+            CodeGenerator code{mem_ptr};
 
             auto f = code.xptr<std::uint64_t (*)()>();
             mem.unprotect();

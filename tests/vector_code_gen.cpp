@@ -18,12 +18,13 @@ using namespace oaknut::util;
 
 TEST_CASE("Basic Test (VectorCodeGenerator)")
 {
-    CodeBlock mem{4096};
     std::vector<std::uint32_t> vec;
-    VectorCodeGenerator code{vec, mem.ptr()};
+    VectorCodeGenerator code{vec};
 
     code.MOV(W0, 42);
     code.RET();
+
+    CodeBlock mem{4096};
 
     mem.unprotect();
     std::memcpy(mem.ptr(), vec.data(), vec.size() * sizeof(std::uint32_t));
@@ -36,9 +37,8 @@ TEST_CASE("Basic Test (VectorCodeGenerator)")
 
 TEST_CASE("Fibonacci (VectorCodeGenerator)")
 {
-    CodeBlock mem{4096};
     std::vector<std::uint32_t> vec;
-    VectorCodeGenerator code{vec, mem.ptr()};
+    VectorCodeGenerator code{vec};
 
     Label start, end, zero, recurse;
 
@@ -68,6 +68,8 @@ TEST_CASE("Fibonacci (VectorCodeGenerator)")
     code.LDP(X20, X19, SP, 16);
     code.LDP(X29, X30, SP, POST_INDEXED, 32);
     code.RET();
+
+    CodeBlock mem{4096};
 
     mem.unprotect();
     std::memcpy(mem.ptr(), vec.data(), vec.size() * sizeof(std::uint32_t));
