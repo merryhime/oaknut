@@ -112,8 +112,8 @@ std::uint32_t encode(AddrOffset<size, align> v)
 {
     static_assert(std::popcount(splat) == size - align);
 
-    const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
-        const std::ptrdiff_t diff = target - current_addr;
+    const auto encode_fn = [](std::ptrdiff_t current_offset, std::ptrdiff_t target_offset) {
+        const std::ptrdiff_t diff = target_offset - current_offset;
         return pdep<splat>(AddrOffset<size, align>::encode(diff));
     };
 
@@ -122,19 +122,16 @@ std::uint32_t encode(AddrOffset<size, align> v)
                               return pdep<splat>(encoding);
                           },
                           [&](Label* label) -> std::uint32_t {
-                              if (label->m_addr) {
-                                  return encode_fn(Policy::current_address(), *label->m_addr);
+                              if (label->m_offset) {
+                                  return encode_fn(Policy::offset(), *label->m_offset);
                               }
 
-                              label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
+                              label->m_wbs.emplace_back(Label::Writeback{Policy::offset(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
                               return 0u;
                           },
-                          [&]([[maybe_unused]] const void* p) -> std::uint32_t {
-                              if constexpr (Policy::has_absolute_addresses) {
-                                  return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
-                              } else {
-                                  throw OaknutException{ExceptionType::RequiresAbsoluteAddressesContext};
-                              }
+                          [&](const void* p) -> std::uint32_t {
+                              const std::ptrdiff_t diff = reinterpret_cast<std::uintptr_t>(p) - Policy::template xptr<std::uintptr_t>();
+                              return pdep<splat>(AddrOffset<size, align>::encode(diff));
                           },
                       },
                       v.m_payload);
@@ -145,25 +142,21 @@ std::uint32_t encode(PageOffset<size, shift_amount> v)
 {
     static_assert(std::popcount(splat) == size);
 
-    const auto encode_fn = [](std::uintptr_t current_addr, std::uintptr_t target) {
-        return pdep<splat>(PageOffset<size, shift_amount>::encode(current_addr, target));
+    const auto encode_fn = [](std::ptrdiff_t current_offset, std::ptrdiff_t target_offset) {
+        return pdep<splat>(PageOffset<size, shift_amount>::encode(static_cast<std::uintptr_t>(current_offset), static_cast<std::uintptr_t>(target_offset)));
     };
 
     return std::visit(detail::overloaded{
                           [&](Label* label) -> std::uint32_t {
-                              if (label->m_addr) {
-                                  return encode_fn(Policy::current_address(), *label->m_addr);
+                              if (label->m_offset) {
+                                  return encode_fn(Policy::offset(), *label->m_offset);
                               }
 
-                              label->m_wbs.emplace_back(Label::Writeback{Policy::current_address(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
+                              label->m_wbs.emplace_back(Label::Writeback{Policy::offset(), ~splat, static_cast<Label::EmitFunctionType>(encode_fn)});
                               return 0u;
                           },
-                          [&]([[maybe_unused]] const void* p) -> std::uint32_t {
-                              if constexpr (Policy::has_absolute_addresses) {
-                                  return encode_fn(Policy::current_address(), reinterpret_cast<std::uintptr_t>(p));
-                              } else {
-                                  throw OaknutException{ExceptionType::RequiresAbsoluteAddressesContext};
-                              }
+                          [&](const void* p) -> std::uint32_t {
+                              return pdep<splat>(PageOffset<size, shift_amount>::encode(Policy::template xptr<std::uintptr_t>(), reinterpret_cast<std::ptrdiff_t>(p)));
                           },
                       },
                       v.m_payload);

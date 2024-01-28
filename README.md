@@ -21,7 +21,7 @@ EmittedFunction EmitExample(oaknut::CodeGenerator& code, int value)
 {
     using namespace oaknut::util;
 
-    EmittedFunction result = code.ptr<EmittedFunction>();
+    EmittedFunction result = code.xptr<EmittedFunction>();
 
     code.MOV(W0, value);
     code.RET();
@@ -32,7 +32,7 @@ EmittedFunction EmitExample(oaknut::CodeGenerator& code, int value)
 int main()
 {
     oaknut::CodeBlock mem{4096};
-    oaknut::CodeGenerator code{mem.ptr()};
+    oaknut::CodeGenerator code{mem.ptr(), mem.ptr()};
 
     mem.unprotect();
 
@@ -47,11 +47,44 @@ int main()
 }
 ```
 
+CodeGenerator takes two pointers. The first pointer is the memory address to write to, and the second pointer is the memory address that the code will be executing from. This allows you to write to a buffer before copying to the final destination for execution, or to have to use dual-mapped memory blocks to avoid memory protection overhead.
+
+Below is an example of using the oaknut-provided utility header for dual-mapped memory blocks:
+
+```cpp
+#include <cstdio>
+#include <oaknut/dual_code_block.hpp>
+#include <oaknut/oaknut.hpp>
+
+using EmittedFunction = ;
+
+int main()
+{
+    using namespace oaknut::util;
+
+    oaknut::DualCodeBlock mem{4096};
+    oaknut::CodeGenerator code{mem.wptr(), mem.xptr()};
+
+    const auto result = code.xptr<int (*)()>();
+
+    code.MOV(W0, value);
+    code.RET();
+
+    mem.invalidate_all();
+
+    std::printf("%i\n", fn());  // Output: 42
+
+    return 0;
+}
+```
+
 ### Emit to `std::vector`
 
 If you wish to merely emit code into memory without executing it, or if you are developing a cross-compiler that is not running on an ARM64 device, you can use `oaknut::VectorCodeGenerator` instead.
 
 Provide `oaknut::VectorCodeGenerator` with a reference to a `std::vector<std::uint32_t>` and it will append to that vector.
+
+The second pointer argument represents the destination address the code will eventually be executed from.
 
 Simple example:
 
@@ -64,7 +97,7 @@ Simple example:
 int main()
 {
     std::vector<std::uint32_t> vec;
-    oaknut::VectorCodeGenerator code{vec};
+    oaknut::VectorCodeGenerator code{vec, (uint32_t*)0x1000};
 
     code.MOV(W0, 42);
     code.RET();
@@ -81,6 +114,7 @@ int main()
 | ------ | --------------------- | -------- |
 | `<oaknut/oaknut.hpp>` | Yes | Provides `CodeGenerator` and `VectorCodeGenerator` for code emission, as well as the `oaknut::util` namespace. |
 | `<oaknut/code_block.hpp>` | No | Utility header that provides `CodeBlock`, allocates, alters permissions of, and invalidates executable memory. |
+| `<oaknut/dual_code_block.hpp>` | No | Utility header that provides `DualCodeBlock`, which allocates two mirrored memory blocks (with RW and RX permissions respectively). |
 | `<oaknut/oaknut_exception.hpp>` | Yes | Provides `OaknutException` which is thrown on an error. |
 | `<oaknut/feature_detection/cpu_feature.hpp>` | Yes | Utility header that provides `CpuFeatures` which can be used to describe AArch64 features. |
 | `<oaknut/feature_detection/feature_detection.hpp>` | No | Utility header that provides `detect_features` and `read_id_registers` for determining available AArch64 features. |

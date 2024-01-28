@@ -8,18 +8,18 @@
 
 #include "oaknut/oaknut.hpp"
 
-#define T(HEX, CMD)                   \
-    TEST_CASE(#CMD)                   \
-    {                                 \
-        using namespace oaknut;       \
-        using namespace oaknut::util; \
-                                      \
-        std::uint32_t result;         \
-        CodeGenerator code{&result};  \
-                                      \
-        code.CMD;                     \
-                                      \
-        REQUIRE(result == HEX);       \
+#define T(HEX, CMD)                           \
+    TEST_CASE(#CMD)                           \
+    {                                         \
+        using namespace oaknut;               \
+        using namespace oaknut::util;         \
+                                              \
+        std::uint32_t result;                 \
+        CodeGenerator code{&result, &result}; \
+                                              \
+        code.CMD;                             \
+                                              \
+        REQUIRE(result == HEX);               \
     }
 
 T(0x1a0f01c3, ADC(W3, W14, W15))
