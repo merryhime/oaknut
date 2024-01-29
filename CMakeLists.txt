@@ -50,12 +50,16 @@ add_library(merry::oaknut ALIAS oaknut)
 target_sources(oaknut INTERFACE "$<BUILD_INTERFACE:${header_files}>")
 target_include_directories(oaknut INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_LIBDIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 target_compile_features(oaknut INTERFACE cxx_std_20)
 
 # Tests
 if (MASTER_PROJECT)
+    include(CTest)
+endif()
+
+if (BUILD_TESTING)
     option(OAKNUT_USE_BUNDLED_CATCH "Use the embedded Catch2 submodule" OFF)
     if (OAKNUT_USE_BUNDLED_CATCH)
         add_subdirectory(externals/catch)
