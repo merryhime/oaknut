@@ -105,6 +105,8 @@ if (BUILD_TESTING)
     else()
         target_compile_options(oaknut-tests PRIVATE -Wall -Wextra -Wcast-qual -pedantic -pedantic-errors -Wfatal-errors -Wno-missing-braces)
     endif()
+
+    add_test(oaknut-tests oaknut-tests --durations yes)
 endif()
 
 # Install

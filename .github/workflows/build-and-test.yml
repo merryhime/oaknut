@@ -3,7 +3,7 @@ on: [push, pull_request]
 jobs:
   test_on_ubuntu:
     runs-on: ubuntu-latest
-    name: g++-10
+    name: g++-10 (aarch64)
 
     steps:
       - name: Checkout oaknut repo
@@ -207,3 +207,40 @@ jobs:
       - name: Build
         working-directory: ${{github.workspace}}/build
         run: cmake --build . --config Release
+
+  x86_64:
+    runs-on: ubuntu-latest
+    name: x86_64
+
+    steps:
+      - name: Checkout oaknut repo
+        uses: actions/checkout@v3
+
+      - name: Update package repositories
+        run: sudo apt-get update
+
+      - name: Install dependencies
+        run: sudo apt-get install -q -y ninja-build
+
+      - name: Checkout Catch2 v3 repo
+        uses: actions/checkout@v3
+        with:
+          repository: catchorg/Catch2
+          ref: v3.2.0
+          path: externals/catch
+
+      - name: Configure CMake
+        run: >
+          cmake
+          -B ${{github.workspace}}/build
+          -H.
+          -GNinja
+          -DOAKNUT_USE_BUNDLED_CATCH=ON
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: ninja
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        run: ./oaknut-tests -d yes
