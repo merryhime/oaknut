@@ -9,9 +9,13 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#include "oaknut/code_block.hpp"
-#include "oaknut/oaknut.hpp"
-#include "rand_int.hpp"
+#include "architecture.hpp"
+
+#ifdef ON_ARM64
+
+#    include "oaknut/code_block.hpp"
+#    include "oaknut/oaknut.hpp"
+#    include "rand_int.hpp"
 
 using namespace oaknut;
 using namespace oaknut::util;
@@ -83,3 +87,5 @@ TEST_CASE("Fibonacci (VectorCodeGenerator)")
     REQUIRE(fib(5) == 5);
     REQUIRE(fib(9) == 34);
 }
+
+#endif

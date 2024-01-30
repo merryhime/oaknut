@@ -7,13 +7,17 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#include "oaknut/code_block.hpp"
-#include "oaknut/dual_code_block.hpp"
+#include "architecture.hpp"
 #include "oaknut/oaknut.hpp"
 #include "rand_int.hpp"
 
 using namespace oaknut;
 using namespace oaknut::util;
+
+#ifdef ON_ARM64
+
+#    include "oaknut/code_block.hpp"
+#    include "oaknut/dual_code_block.hpp"
 
 TEST_CASE("Basic Test")
 {
@@ -196,19 +200,6 @@ TEST_CASE("ADR", "[slow]")
     }
 }
 
-TEST_CASE("PageOffset (rollover)")
-{
-    REQUIRE(PageOffset<21, 12>::encode(0x0000000088e74000, 0xffffffffd167dece) == 0xd2202);
-}
-
-TEST_CASE("PageOffset (page boundary)")
-{
-    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000002, 0x0001000000000001) == 0);
-    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000001, 0x0001000000000002) == 0);
-    REQUIRE(PageOffset<21, 12>::encode(0x0001000000001000, 0x0001000000000fff) == 0x1fffff);
-    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000fff, 0x0001000000001000) == 0x080000);
-}
-
 TEST_CASE("ADRP", "[slow]")
 {
     CodeBlock mem{4096};
@@ -324,4 +315,19 @@ TEST_CASE("MOVP2R (4GiB boundary)")
         test(i);
         test(-i);
     }
+}
+
+#endif
+
+TEST_CASE("PageOffset (rollover)")
+{
+    REQUIRE(PageOffset<21, 12>::encode(0x0000000088e74000, 0xffffffffd167dece) == 0xd2202);
+}
+
+TEST_CASE("PageOffset (page boundary)")
+{
+    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000002, 0x0001000000000001) == 0);
+    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000001, 0x0001000000000002) == 0);
+    REQUIRE(PageOffset<21, 12>::encode(0x0001000000001000, 0x0001000000000fff) == 0x1fffff);
+    REQUIRE(PageOffset<21, 12>::encode(0x0001000000000fff, 0x0001000000001000) == 0x080000);
 }
